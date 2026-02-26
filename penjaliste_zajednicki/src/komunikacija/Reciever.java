@@ -18,7 +18,7 @@ public class Reciever {
         this.s = s;
     }
     
-    private Object recieve() throws Exception{
+    public Object recieve() throws Exception{
         try {
             ObjectInputStream in = new ObjectInputStream(s.getInputStream());
             return in.readObject();

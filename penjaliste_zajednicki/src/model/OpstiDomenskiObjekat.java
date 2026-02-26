@@ -13,11 +13,12 @@ import java.util.List;
  * @author Administrator
  */
 public interface OpstiDomenskiObjekat extends Serializable{
-    public List<OpstiDomenskiObjekat> vratiListu(ResultSet rs) throws Exception; 
     public String vratiNazivTabele();   
     public String vratiKoloneZaInsert();      
-    public String vratiVrednostiZaInsert();    
-    public String vratiPrimarniKljuc();      
-    public OpstiDomenskiObjekat vratiObjekatIzRS(ResultSet rs) throws Exception;   
-    public String vratiVrednostiZaUpdate(); 
+    public String vratiVrednostiZaInsert(); 
+    public void postaviId(Long id);    
+    public String vratiVrednostiZaUpdate();
+    public String vratiPrimarniKljuc();     
+    public List<OpstiDomenskiObjekat> vratiListuIzRS(ResultSet rs) throws Exception; 
+    public OpstiDomenskiObjekat vratiObjekatIzRS(ResultSet rs) throws Exception;
 }

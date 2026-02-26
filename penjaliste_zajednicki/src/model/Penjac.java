@@ -5,6 +5,7 @@
 package model;
 
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,7 +14,7 @@ import java.util.Objects;
  * @author Administrator
  */
 public class Penjac implements OpstiDomenskiObjekat{
-    private int idPenjac;
+    private Long idPenjac;
     private String ime;
     private String prezime;
     private int godine;
@@ -23,8 +24,8 @@ public class Penjac implements OpstiDomenskiObjekat{
     public Penjac() {
     }
 
-    public Penjac(int id, String ime, String prezime, int godine, String email, Kategorija kategorija) {
-        this.idPenjac = id;
+    public Penjac(Long idPenjac, String ime, String prezime, int godine, String email, Kategorija kategorija) {
+        this.idPenjac = idPenjac;
         this.ime = ime;
         this.prezime = prezime;
         this.godine = godine;
@@ -40,12 +41,12 @@ public class Penjac implements OpstiDomenskiObjekat{
         this.kategorija = kategorija;
     }
 
-    public int getId() {
+    public Long getIdPenjac() {
         return idPenjac;
     }
 
-    public void setId(int id) {
-        this.idPenjac = id;
+    public void setId(Long idPenjac) {
+        this.idPenjac = idPenjac;
     }
 
     public String getIme() {
@@ -114,36 +115,82 @@ public class Penjac implements OpstiDomenskiObjekat{
 
     @Override
     public String vratiNazivTabele() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public List<OpstiDomenskiObjekat> vratiListu(ResultSet rs) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "penjac";
     }
 
     @Override
     public String vratiKoloneZaInsert() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "ime, prezime, godine, email, kategorija";
     }
 
     @Override
     public String vratiVrednostiZaInsert() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        StringBuilder sb = new StringBuilder();
+        sb.append("'").append(ime).append("', ")
+          .append("'").append(prezime).append("', ")
+          .append(godine).append(", ")
+          .append("'").append(email).append("', ")
+          .append("'").append(kategorija.getIdKategorija()).append("'"); 
+        return sb.toString();
     }
-
+    
     @Override
-    public String vratiPrimarniKljuc() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public OpstiDomenskiObjekat vratiObjekatIzRS(ResultSet rs) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void postaviId(Long id) {
+        this.idPenjac = id;
     }
 
     @Override
     public String vratiVrednostiZaUpdate() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        StringBuilder sb = new StringBuilder();
+        sb.append("ime = '").append(ime).append("', ")
+          .append("prezime = '").append(prezime).append("', ")
+          .append("godine = ").append(godine).append(", ")
+          .append("email = '").append(email).append("', ")
+          .append("kategorija = ").append(kategorija.getIdKategorija());
+        return sb.toString();
+    }
+
+    @Override
+    public String vratiPrimarniKljuc() {
+        return "idPenjac = " + idPenjac;
+    }
+
+    @Override
+    public List<OpstiDomenskiObjekat> vratiListuIzRS(ResultSet rs) throws Exception {
+        List<OpstiDomenskiObjekat> lista = new ArrayList<>();
+        while (rs.next()) {
+            Long idPenjac = rs.getLong("idPenjac");
+            String ime = rs. getString("ime");
+            String prezime = rs. getString("prezime");
+            int godine = rs.getInt("godine");
+            String email = rs.getString("email");
+            
+            Long idKategorija = rs.getLong("idKategorija");
+            String naziv = rs.getString("naziv");
+            
+            Kategorija k = new Kategorija(idKategorija, naziv);
+            
+            lista.add(new Penjac(idPenjac, ime, prezime, godine, email, k));
+        }
+        return lista;
+    }
+
+    @Override
+    public OpstiDomenskiObjekat vratiObjekatIzRS(ResultSet rs) throws Exception {
+        if (rs.next()) {
+            Long idPenjac = rs.getLong("idPenjac");
+            String ime = rs. getString("ime");
+            String prezime = rs. getString("prezime");
+            int godine = rs.getInt("godine");
+            String email = rs.getString("email");
+           
+            Long idKategorija = rs.getLong("idKategorija");
+            String naziv = rs.getString("naziv");
+            
+            Kategorija k = new Kategorija(idKategorija, naziv);
+            
+            return new Penjac(idPenjac, ime, prezime, godine, email, k);
+        }
+        return null;
     }
 }

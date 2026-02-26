@@ -4,14 +4,17 @@
  */
 package model;
 
+import java.sql.ResultSet;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author Administrator
  */
-public class Smena {
-    private int idSmena;
+public class Smena implements OpstiDomenskiObjekat {
+    private Long idSmena;
     private String naziv;
     private LocalTime vremeOd;
     private LocalTime vremeDo;
@@ -19,19 +22,19 @@ public class Smena {
     public Smena() {
     }
 
-    public Smena(int id, String naziv, LocalTime vremeOd, LocalTime vremeDo) {
-        this.idSmena = id;
+    public Smena(Long idSmena, String naziv, LocalTime vremeOd, LocalTime vremeDo) {
+        this.idSmena = idSmena;
         this.naziv = naziv;
         this.vremeOd = vremeOd;
         this.vremeDo = vremeDo;
     }
 
-    public int getId() {
+    public Long getIdSmena() {
         return idSmena;
     }
 
-    public void setId(int id) {
-        this.idSmena = id;
+    public void setIdSmena(Long idSmena) {
+        this.idSmena = idSmena;
     }
 
     public String getNaziv() {
@@ -56,5 +59,70 @@ public class Smena {
 
     public void setVremeDo(LocalTime vremeDo) {
         this.vremeDo = vremeDo;
+    }
+
+    @Override
+    public String vratiNazivTabele() {
+        return "smena";
+    }
+
+    @Override
+    public String vratiKoloneZaInsert() {
+        return "naziv, vremeOd, vremeDo";
+    }
+
+    @Override
+    public String vratiVrednostiZaInsert() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("'").append(naziv).append("', '")
+          .append(vremeOd).append("', '")
+          .append(vremeDo).append("'");
+        return sb.toString();
+    }
+
+    @Override
+    public void postaviId(Long id) {
+        this.idSmena = id;
+    }
+
+    @Override
+    public String vratiVrednostiZaUpdate() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("naziv = '").append(naziv).append("', ")
+          .append("vremeOd = '").append(vremeOd).append("', ")
+          .append("vremeDo = '").append(vremeDo).append("'");
+        return sb.toString();
+    }
+
+    @Override
+    public String vratiPrimarniKljuc() {
+        return "idSmena = " + idSmena;
+    }
+
+    @Override
+    public List<OpstiDomenskiObjekat> vratiListuIzRS(ResultSet rs) throws Exception {
+        List<OpstiDomenskiObjekat> lista = new ArrayList<>();
+        while (rs.next()) {
+            Long idSmena = rs.getLong("idSmena");
+            String naziv = rs.getString("naziv");
+            LocalTime vremeOd = rs.getTime("vremeOd").toLocalTime();
+            LocalTime vremeDo = rs.getTime("vremeDo").toLocalTime();
+            
+            lista.add(new Smena(idSmena, naziv, vremeOd, vremeDo));
+        }
+        return lista;
+    }
+
+    @Override
+    public OpstiDomenskiObjekat vratiObjekatIzRS(ResultSet rs) throws Exception {
+        if (rs.next()) {
+            Long idSmena = rs.getLong("idSmena");
+            String naziv = rs.getString("naziv");
+            LocalTime vremeOd = rs.getTime("vremeOd").toLocalTime();
+            LocalTime vremeDo = rs.getTime("vremeDo").toLocalTime();
+            
+            return new Smena(idSmena, naziv, vremeOd, vremeDo);
+        }
+        return null;
     }
 }

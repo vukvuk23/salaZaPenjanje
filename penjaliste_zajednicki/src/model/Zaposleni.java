@@ -4,14 +4,17 @@
  */
 package model;
 
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
  *
  * @author Administrator
  */
-public class Zaposleni { 
-    private int idZaposleni;
+public class Zaposleni implements OpstiDomenskiObjekat { 
+    private Long idZaposleni;
     private String ime;
     private String prezime;
     private String email;
@@ -21,8 +24,8 @@ public class Zaposleni {
     public Zaposleni() {
     }
 
-    public Zaposleni(int id, String ime, String prezime, String email, String brTelefona, String lozinka) {
-        this.idZaposleni = id;
+    public Zaposleni(Long idZaposleni, String ime, String prezime, String email, String brTelefona, String lozinka) {
+        this.idZaposleni = idZaposleni;
         this.ime = ime;
         this.prezime = prezime;
         this.email = email;
@@ -30,12 +33,12 @@ public class Zaposleni {
         this.lozinka = lozinka;
     }
 
-    public int getId() {
+    public Long getIdZaposleni() {
         return idZaposleni;
     }
 
-    public void setId(int id) {
-        this.idZaposleni = id;
+    public void setIdZaposleni(Long idZaposleni) {
+        this.idZaposleni = idZaposleni;
     }
 
     public String getIme() {
@@ -105,5 +108,78 @@ public class Zaposleni {
             return false;
         }
         return Objects.equals(this.lozinka, other.lozinka);
+    }
+
+    @Override
+    public String vratiNazivTabele() {
+        return "zaposleni";
+    }
+
+    @Override
+    public String vratiKoloneZaInsert() {
+        return "ime, prezime, email, brTelefona, lozinka";
+    }
+
+    @Override
+    public String vratiVrednostiZaInsert() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("'").append(ime).append("', ")
+          .append("'").append(prezime).append("', ")
+          .append("'").append(email).append("', ")
+          .append("'").append(brTelefona).append("', ")
+          .append("'").append(lozinka).append("'");
+        return sb.toString();
+    }
+
+    @Override
+    public void postaviId(Long id) {
+        this.idZaposleni = id;
+    }
+
+    @Override
+    public String vratiVrednostiZaUpdate() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("ime = '").append(ime).append("', ")
+          .append("prezime = '").append(prezime).append("', ")
+          .append("email = '").append(email).append("', ")
+          .append("brTelefona = '").append(brTelefona).append("', ")
+          .append("lozinka = '").append(lozinka).append("'");
+        return sb.toString();
+    }
+
+    @Override
+    public String vratiPrimarniKljuc() {
+        return "idZaposleni = " + idZaposleni;
+    }
+
+    @Override
+    public List<OpstiDomenskiObjekat> vratiListuIzRS(ResultSet rs) throws Exception {
+        List<OpstiDomenskiObjekat> lista = new ArrayList<>();
+        while (rs.next()) {
+            Long idZaposleni = rs.getLong("idZaposleni");
+            String ime = rs.getString("ime");
+            String prezime = rs.getString("prezime");
+            String email = rs.getString("email");
+            String brTelefona = rs.getString("brTelefona");
+            String lozinka = rs.getString("lozinka");
+
+            lista.add(new Zaposleni(idZaposleni, ime, prezime, email, brTelefona, lozinka));
+        }
+        return lista;
+    }
+
+    @Override
+    public OpstiDomenskiObjekat vratiObjekatIzRS(ResultSet rs) throws Exception {
+        if (rs.next()) {
+            Long idZaposleni = rs.getLong("idZaposleni");
+            String ime = rs.getString("ime");
+            String prezime = rs.getString("prezime");
+            String email = rs.getString("email");
+            String brTelefona = rs.getString("brTelefona");
+            String lozinka = rs.getString("lozinka");
+
+            return new Zaposleni(idZaposleni, ime, prezime, email, brTelefona, lozinka);
+        }
+        return null;
     }
 }

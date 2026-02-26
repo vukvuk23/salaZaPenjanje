@@ -4,30 +4,33 @@
  */
 package model;
 
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
  *
  * @author Administrator
  */
-public class Kategorija {
-    private int idKategorija;
+public class Kategorija implements OpstiDomenskiObjekat {
+    private Long idKategorija;
     private String naziv;
 
     public Kategorija() {
     }
 
-    public Kategorija(int id, String naziv) {
-        this.idKategorija = id;
+    public Kategorija(Long idKategorija, String naziv) {
+        this.idKategorija = idKategorija;
         this.naziv = naziv;
     }
 
-    public int getId() {
+    public Long getIdKategorija() {
         return idKategorija;
     }
 
-    public void setId(int id) {
-        this.idKategorija = id;
+    public void setIdKategorija(Long idKategorija) {
+        this.idKategorija = idKategorija;
     }
 
     public String getNaziv() {
@@ -40,7 +43,7 @@ public class Kategorija {
 
     @Override
     public String toString() {
-        return "Kategorija{" + "id=" + idKategorija + ", naziv=" + naziv + '}';
+        return "Kategorija{" + "idKategorija=" + idKategorija + ", naziv=" + naziv + '}';
     }
 
     @Override
@@ -62,5 +65,58 @@ public class Kategorija {
         }
         final Kategorija other = (Kategorija) obj;
         return Objects.equals(this.naziv, other.naziv);
+    }
+
+    @Override
+    public String vratiNazivTabele() {
+         return "kategorija";
+    }
+
+    @Override
+    public String vratiKoloneZaInsert() {
+        return "naziv";
+    }
+
+    @Override
+    public String vratiVrednostiZaInsert() {
+         return "'" + naziv + "'";
+    }
+
+    @Override
+    public void postaviId(Long id) {
+        this.idKategorija = id;
+    }
+
+    @Override
+    public String vratiVrednostiZaUpdate() {
+        return "naziv = '" + naziv + "'";
+    }
+
+    @Override
+    public String vratiPrimarniKljuc() {
+        return "idKategorija = " + idKategorija;
+    }
+
+    @Override
+    public List<OpstiDomenskiObjekat> vratiListuIzRS(ResultSet rs) throws Exception {
+        List<OpstiDomenskiObjekat> lista = new ArrayList<>();
+        while (rs.next()) {
+            Long idKategorija = rs.getLong("idKategorija");
+            String naziv = rs.getString("naziv");
+            
+            lista.add(new Kategorija(idKategorija, naziv));
+        }
+        return lista;
+    }
+
+    @Override
+    public OpstiDomenskiObjekat vratiObjekatIzRS(ResultSet rs) throws Exception {
+        if (rs.next()) {
+            Long idKategorija = rs.getLong("idKategorija");
+            String naziv = rs.getString("naziv");
+            
+            return new Kategorija(idKategorija, naziv);
+        }
+        return null;
     }
 }
