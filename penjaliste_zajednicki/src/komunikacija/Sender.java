@@ -20,7 +20,7 @@ public class Sender {
     
     public void send(Object o) throws Exception{
         try {
-            ObjectOutputStream out = new ObjectOutputStream(s.getOutputStream()); // van metode?? da li onda baca io ex??
+            ObjectOutputStream out = new ObjectOutputStream(s.getOutputStream());
             out.writeObject(o);
             out.flush();
         } catch (Exception e) {

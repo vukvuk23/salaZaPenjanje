@@ -24,9 +24,10 @@ public class DbRepositoryGeneric implements DbRepository<OpstiDomenskiObjekat>{
         try {
             Connection connection = DbConnectionFactory.getInstance().getConnection();
             StringBuilder sb = new StringBuilder();
-            sb.append("SELECT * FROM ").append(odo.vratiNazivTabele());
+            sb.append("SELECT * FROM ").append(odo.vratiNazivTabele())
+              .append(odo.alias()).append(odo.join());
             if (uslov != null && !uslov.isEmpty()) {
-                sb.append(uslov); // da li da ovde dodam where, ali i da dodam odo.join() metodu
+                sb.append(" WHERE ").append(uslov); 
             }
             String upit = sb.toString();
             System.out.println(upit);
@@ -44,7 +45,7 @@ public class DbRepositoryGeneric implements DbRepository<OpstiDomenskiObjekat>{
     }
 
     @Override
-    public void add(OpstiDomenskiObjekat odo) throws Exception { // mozda moze da vrati Long id
+    public void add(OpstiDomenskiObjekat odo) throws Exception { 
         try {
             Connection connection = DbConnectionFactory.getInstance().getConnection();
             StringBuilder sb = new StringBuilder();// nije thread safe
@@ -57,7 +58,7 @@ public class DbRepositoryGeneric implements DbRepository<OpstiDomenskiObjekat>{
             st.executeUpdate(upit, Statement.RETURN_GENERATED_KEYS);// br redova na koje je naredba uticala
             ResultSet rsKey = st.getGeneratedKeys();
             if(rsKey.next()){
-                Long id = rsKey.getLong(1);// unapredjeni long, dodaci za null i parse
+                Long id = rsKey.getLong(1);
                 odo.postaviId(id);
             }
             rsKey.close();
@@ -109,11 +110,12 @@ public class DbRepositoryGeneric implements DbRepository<OpstiDomenskiObjekat>{
     }
 
     @Override
-    public OpstiDomenskiObjekat get(OpstiDomenskiObjekat odo, String uslov) throws Exception {
+    public OpstiDomenskiObjekat get(OpstiDomenskiObjekat odo, String uslov) throws Exception {// izbaciti iz parametara uslov i dodati metodu uslov() u odo
         try {
             Connection connection = DbConnectionFactory.getInstance().getConnection();
             StringBuilder sb = new StringBuilder();
             sb.append("SELECT * FROM ").append(odo.vratiNazivTabele())
+              .append(odo.alias()).append(odo.join())
               .append(uslov);
             String upit = sb.toString();
             System.out.println(upit);

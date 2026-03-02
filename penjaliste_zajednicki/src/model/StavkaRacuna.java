@@ -24,13 +24,12 @@ public class StavkaRacuna implements OpstiDomenskiObjekat {
     public StavkaRacuna() {
     }
     
-    public StavkaRacuna(Long rbr, Racun racun, int kolicina, double cena, double iznos, Usluga usluga ) {
-        this.rbr = rbr;
+    public StavkaRacuna(Racun racun, int kolicina, Usluga usluga) {
         this.racun = racun;
         this.kolicina = kolicina;
-        this.cena = cena;
-        this.iznos = iznos;
         this.usluga = usluga;
+        this.cena = usluga.getCena();
+        this.iznos = kolicina * this.cena;
     }
 
     public Long getRbr() {
@@ -124,28 +123,36 @@ public class StavkaRacuna implements OpstiDomenskiObjekat {
 
     @Override
     public String vratiPrimarniKljuc() {
-        return "rbr = " + rbr; // hmmm
+        return "rbr = " + rbr + " AND racun = " + racun.getIdRacun();
     }
 
     @Override
     public List<OpstiDomenskiObjekat> vratiListuIzRS(ResultSet rs) throws Exception {
         List<OpstiDomenskiObjekat> lista = new ArrayList<>();
         while (rs.next()) {
-            Long rbr = rs.getLong("stavkaracuna.rbr");
-            int kolicina = rs.getInt("stavkaracuna.kolicina");
-            double cena = rs.getDouble("stavkaracuna.cena");
-            double iznos = rs.getDouble("stavkaracuna.iznos");
+            Long rbr = rs.getLong("sr.rbr");
+            int kolicina = rs.getInt("sr.kolicina");
+            double cena = rs.getDouble("sr.cena");
+            double iznos = rs.getDouble("sr.iznos");
 
-            Long idUsluga = rs.getLong("usluga.idUsluga");
-            String nazivUsluga = rs.getString("usluga.naziv");
-            double cenaUsluga = rs.getDouble("usluga.cena");
+            Long idUsluga = rs.getLong("u.idUsluga");
+            String nazivUsluga = rs.getString("u.naziv");
+            double cenaUsluga = rs.getDouble("u.cena");
             
             Usluga u = new Usluga(idUsluga, nazivUsluga, cenaUsluga);
 
             Racun r = new Racun();
-            r.setIdRacun(rs.getLong("stavkaracuna.racun"));
+            r.setIdRacun(rs.getLong("sr.racun"));
             
-            lista.add(new StavkaRacuna(rbr, r, kolicina, cena, iznos, u));
+            StavkaRacuna sr = new StavkaRacuna();
+            sr.setRbr(rbr);
+            sr.setRacun(r);
+            sr.setKolicina(kolicina);
+            sr.setCena(cena);
+            sr.setIznos(iznos);
+            sr.setUsluga(u);
+            
+            lista.add(sr);
         }
         return lista;
     }
@@ -153,22 +160,45 @@ public class StavkaRacuna implements OpstiDomenskiObjekat {
     @Override
     public OpstiDomenskiObjekat vratiObjekatIzRS(ResultSet rs) throws Exception {
         if (rs.next()) {
-            Long rbr = rs.getLong("stavkaracuna.rbr");
-            int kolicina = rs.getInt("stavkaracuna.kolicina");
-            double cena = rs.getDouble("stavkaracuna.cena");
-            double iznos = rs.getDouble("stavkaracuna.iznos");
+            Long rbr = rs.getLong("sr.rbr");
+            int kolicina = rs.getInt("sr.kolicina");
+            double cena = rs.getDouble("sr.cena");
+            double iznos = rs.getDouble("sr.iznos");
 
-            Long idUsluga = rs.getLong("usluga.idUsluga");
-            String nazivUsluga = rs.getString("usluga.naziv");
-            double cenaUsluga = rs.getDouble("usluga.cena");
+            Long idUsluga = rs.getLong("u.idUsluga");
+            String nazivUsluga = rs.getString("u.naziv");
+            double cenaUsluga = rs.getDouble("u.cena");
             
             Usluga u = new Usluga(idUsluga, nazivUsluga, cenaUsluga);
             
             Racun r = new Racun();
-            r.setIdRacun(rs.getLong("stavkaracuna.racun"));
+            r.setIdRacun(rs.getLong("sr.racun"));
             
-            return new StavkaRacuna(rbr, r, kolicina, cena, iznos, u);
+            StavkaRacuna sr = new StavkaRacuna();
+            sr.setRbr(rbr);
+            sr.setRacun(r);
+            sr.setKolicina(kolicina);
+            sr.setCena(cena);
+            sr.setIznos(iznos);
+            sr.setUsluga(u);
+            
+            return sr;
         }
         return null;
+    }
+
+    @Override
+    public String join() {
+        return " JOIN usluga u ON sr.usluga = u.idUsluga ";
+    }
+
+    @Override
+    public String alias() {
+        return " sr ";
+    }
+
+    @Override
+    public String uslovZaSelect() {
+        return "sr.racun = " + racun.getIdRacun();
     }
 }

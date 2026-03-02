@@ -12,7 +12,7 @@ import java.io.Serializable;
  */
 public class Odgovor implements Serializable {
     private Object odgovor;
-    private Exception ex; // da li je potrebno?
+    private Exception ex;
 
     public Odgovor() {
     }

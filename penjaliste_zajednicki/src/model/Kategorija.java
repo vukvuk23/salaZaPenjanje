@@ -40,10 +40,10 @@ public class Kategorija implements OpstiDomenskiObjekat {
     public void setNaziv(String naziv) {
         this.naziv = naziv;
     }
-
+    
     @Override
     public String toString() {
-        return "Kategorija{" + "idKategorija=" + idKategorija + ", naziv=" + naziv + '}';
+        return naziv;
     }
 
     @Override
@@ -74,12 +74,12 @@ public class Kategorija implements OpstiDomenskiObjekat {
 
     @Override
     public String vratiKoloneZaInsert() {
-        return "naziv";
+        return "naziv, popust";
     }
 
     @Override
     public String vratiVrednostiZaInsert() {
-         return "'" + naziv + "'";
+        return "'" + naziv + "'";
     }
 
     @Override
@@ -103,6 +103,7 @@ public class Kategorija implements OpstiDomenskiObjekat {
         while (rs.next()) {
             Long idKategorija = rs.getLong("idKategorija");
             String naziv = rs.getString("naziv");
+            int popust = rs.getInt("popust");
             
             lista.add(new Kategorija(idKategorija, naziv));
         }
@@ -114,9 +115,25 @@ public class Kategorija implements OpstiDomenskiObjekat {
         if (rs.next()) {
             Long idKategorija = rs.getLong("idKategorija");
             String naziv = rs.getString("naziv");
+            int popust = rs.getInt("popust");
             
             return new Kategorija(idKategorija, naziv);
         }
         return null;
+    }
+
+    @Override
+    public String join() {
+        return "";
+    }
+
+    @Override
+    public String alias() {
+        return " k ";
+    }
+
+    @Override
+    public String uslovZaSelect() {
+        return "";
     }
 }

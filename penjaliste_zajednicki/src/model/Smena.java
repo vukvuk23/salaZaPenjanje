@@ -116,13 +116,28 @@ public class Smena implements OpstiDomenskiObjekat {
     @Override
     public OpstiDomenskiObjekat vratiObjekatIzRS(ResultSet rs) throws Exception {
         if (rs.next()) {
-            Long idSmena = rs.getLong("idSmena");
-            String naziv = rs.getString("naziv");
-            LocalTime vremeOd = rs.getTime("vremeOd").toLocalTime();
-            LocalTime vremeDo = rs.getTime("vremeDo").toLocalTime();
+            Long idSmena = rs.getLong("s.idSmena");
+            String naziv = rs.getString("s.naziv");
+            LocalTime vremeOd = rs.getTime("s.vremeOd").toLocalTime();
+            LocalTime vremeDo = rs.getTime("s.vremeDo").toLocalTime();
             
             return new Smena(idSmena, naziv, vremeOd, vremeDo);
         }
         return null;
+    }
+
+    @Override
+    public String join() {
+        return "";
+    }
+
+    @Override
+    public String alias() {
+        return " s ";
+    }
+
+    @Override
+    public String uslovZaSelect() {
+        return "";
     }
 }

@@ -83,7 +83,7 @@ public class Zaposleni implements OpstiDomenskiObjekat {
 
     @Override
     public String toString() {
-        return "Zaposleni{" + "id=" + idZaposleni + ", ime=" + ime + ", prezime=" + prezime + ", email=" + email + ", brTelefona=" + brTelefona + ", lozinka=" + lozinka + '}';
+        return ime + " " + prezime;
     }
 
     @Override
@@ -156,12 +156,12 @@ public class Zaposleni implements OpstiDomenskiObjekat {
     public List<OpstiDomenskiObjekat> vratiListuIzRS(ResultSet rs) throws Exception {
         List<OpstiDomenskiObjekat> lista = new ArrayList<>();
         while (rs.next()) {
-            Long idZaposleni = rs.getLong("idZaposleni");
-            String ime = rs.getString("ime");
-            String prezime = rs.getString("prezime");
-            String email = rs.getString("email");
-            String brTelefona = rs.getString("brTelefona");
-            String lozinka = rs.getString("lozinka");
+            Long idZaposleni = rs.getLong("z.idZaposleni");
+            String ime = rs.getString("z.ime");
+            String prezime = rs.getString("z.prezime");
+            String email = rs.getString("z.email");
+            String brTelefona = rs.getString("z.brTelefona");
+            String lozinka = rs.getString("z.lozinka");
 
             lista.add(new Zaposleni(idZaposleni, ime, prezime, email, brTelefona, lozinka));
         }
@@ -171,15 +171,30 @@ public class Zaposleni implements OpstiDomenskiObjekat {
     @Override
     public OpstiDomenskiObjekat vratiObjekatIzRS(ResultSet rs) throws Exception {
         if (rs.next()) {
-            Long idZaposleni = rs.getLong("idZaposleni");
-            String ime = rs.getString("ime");
-            String prezime = rs.getString("prezime");
-            String email = rs.getString("email");
-            String brTelefona = rs.getString("brTelefona");
-            String lozinka = rs.getString("lozinka");
+            Long idZaposleni = rs.getLong("z.idZaposleni");
+            String ime = rs.getString("z.ime");
+            String prezime = rs.getString("z.prezime");
+            String email = rs.getString("z.email");
+            String brTelefona = rs.getString("z.brTelefona");
+            String lozinka = rs.getString("z.lozinka");
 
             return new Zaposleni(idZaposleni, ime, prezime, email, brTelefona, lozinka);
         }
         return null;
+    }
+
+    @Override
+    public String join() {
+        return "";
+    }
+
+    @Override
+    public String alias() {
+        return " z ";
+    }
+
+    @Override
+    public String uslovZaSelect() {
+        return "";
     }
 }

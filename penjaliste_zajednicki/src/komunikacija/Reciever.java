@@ -13,7 +13,7 @@ import java.net.Socket;
  */
 public class Reciever {
     private Socket s;
-
+    
     public Reciever(Socket s) {
         this.s = s;
     }

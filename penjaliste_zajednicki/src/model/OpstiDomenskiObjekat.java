@@ -21,4 +21,8 @@ public interface OpstiDomenskiObjekat extends Serializable{
     public String vratiPrimarniKljuc();     
     public List<OpstiDomenskiObjekat> vratiListuIzRS(ResultSet rs) throws Exception; 
     public OpstiDomenskiObjekat vratiObjekatIzRS(ResultSet rs) throws Exception;
+    public String join();
+    public String alias();
+    public String uslovZaSelect();
+    //public String uslov();
 }

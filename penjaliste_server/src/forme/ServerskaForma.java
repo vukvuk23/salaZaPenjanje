@@ -112,7 +112,7 @@ public class ServerskaForma extends javax.swing.JFrame {
 
     private void jButtonZaustaviActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonZaustaviActionPerformed
         if(server != null){
-            server.zaustavi();
+            server.zaustaviServer();
             jButtonPokreni.setEnabled(true);
             jButtonZaustavi.setEnabled(false);
         }

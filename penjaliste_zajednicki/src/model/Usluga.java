@@ -77,7 +77,7 @@ public class Usluga implements OpstiDomenskiObjekat {
 
     @Override
     public String toString() {
-        return "Usluga{" + "id=" + idUsluga + ", naziv=" + naziv + ", cena=" + cena + '}';
+        return naziv;
     }
 
     @Override
@@ -120,9 +120,9 @@ public class Usluga implements OpstiDomenskiObjekat {
     public List<OpstiDomenskiObjekat> vratiListuIzRS(ResultSet rs) throws Exception {
         List<OpstiDomenskiObjekat> lista = new ArrayList<>();
         while (rs.next()) {
-            Long idUsluga = rs.getLong("idUsluga");
-            String naziv = rs.getString("naziv");
-            double cena = rs.getDouble("cena");
+            Long idUsluga = rs.getLong("u.idUsluga");
+            String naziv = rs.getString("u.naziv");
+            double cena = rs.getDouble("u.cena");
             
             lista.add(new Usluga(idUsluga, naziv, cena));
         }
@@ -132,11 +132,26 @@ public class Usluga implements OpstiDomenskiObjekat {
     @Override
     public OpstiDomenskiObjekat vratiObjekatIzRS(ResultSet rs) throws Exception {
         if (rs.next()) {
-            Long idUsluga = rs.getLong("idUsluga");
-            String naziv = rs.getString("naziv");
-            double cena = rs.getDouble("cena");
+            Long idUsluga = rs.getLong("u.idUsluga");
+            String naziv = rs.getString("u.naziv");
+            double cena = rs.getDouble("u.cena");
             return new Usluga(idUsluga, naziv, cena);
         }
         return null;
+    }
+
+    @Override
+    public String join() {
+        return "";
+    }
+
+    @Override
+    public String alias() {
+        return " u ";
+    }
+
+    @Override
+    public String uslovZaSelect() {
+        return "";
     }
 }

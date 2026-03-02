@@ -36,6 +36,7 @@ public class Server extends Thread{
             }
         } catch (IOException ex) {
             if(serverskiSocket.isClosed()){
+                zaustaviNiti();
                 System.out.println("Server je zaustavljen!");
             }else{
                 ex.printStackTrace();
@@ -47,9 +48,10 @@ public class Server extends Thread{
         for (ObradaKlijentskihZahteva nit : niti) {
             nit.zaustaviNit();
         }
+        niti.clear();
     }
 
-    public void zaustavi() {
+    public void zaustaviServer() {
         if(serverskiSocket != null && !serverskiSocket.isClosed()){
             try {
                 serverskiSocket.close();

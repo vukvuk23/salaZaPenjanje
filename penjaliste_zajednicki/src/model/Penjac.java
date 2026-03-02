@@ -110,9 +110,9 @@ public class Penjac implements OpstiDomenskiObjekat{
 
     @Override
     public String toString() {
-        return "Penjac{" + "id=" + idPenjac + ", ime=" + ime + ", prezime=" + prezime + ", godine=" + godine + ", email=" + email + ", kategorija=" + kategorija + '}';
+        return ime + " " + prezime;
     }
-
+    
     @Override
     public String vratiNazivTabele() {
         return "penjac";
@@ -130,7 +130,7 @@ public class Penjac implements OpstiDomenskiObjekat{
           .append("'").append(prezime).append("', ")
           .append(godine).append(", ")
           .append("'").append(email).append("', ")
-          .append("'").append(kategorija.getIdKategorija()).append("'"); 
+          .append(kategorija.getIdKategorija()); 
         return sb.toString();
     }
     
@@ -178,19 +178,48 @@ public class Penjac implements OpstiDomenskiObjekat{
     @Override
     public OpstiDomenskiObjekat vratiObjekatIzRS(ResultSet rs) throws Exception {
         if (rs.next()) {
-            Long idPenjac = rs.getLong("idPenjac");
-            String ime = rs. getString("ime");
-            String prezime = rs. getString("prezime");
-            int godine = rs.getInt("godine");
-            String email = rs.getString("email");
+            Long idPenjac = rs.getLong("p.idPenjac");
+            String ime = rs. getString("p.ime");
+            String prezime = rs. getString("p.prezime");
+            int godine = rs.getInt("p.godine");
+            String email = rs.getString("p.email");
            
-            Long idKategorija = rs.getLong("idKategorija");
-            String naziv = rs.getString("naziv");
+            Long idKategorija = rs.getLong("k.idKategorija");
+            String naziv = rs.getString("k.naziv");
             
             Kategorija k = new Kategorija(idKategorija, naziv);
             
             return new Penjac(idPenjac, ime, prezime, godine, email, k);
         }
         return null;
+    }
+
+    @Override
+    public String join() {
+        return " JOIN kategorija k ON p.kategorija = k.idKategorija ";
+    }
+
+    @Override
+    public String alias() {
+        return " p ";
+    }
+
+    @Override
+    public String uslovZaSelect() {
+        StringBuilder uslov = new StringBuilder();
+    
+        if (ime != null && !ime.isEmpty()) {
+            uslov.append("p.ime LIKE '%").append(ime).append("%'");
+        }
+        if (prezime != null && !prezime.isEmpty()) {
+            if (uslov.length() > 0) uslov.append(" AND ");
+            uslov.append("p.prezime LIKE '%").append(prezime).append("%'");
+        }
+        if (kategorija != null) {
+            if (uslov.length() > 0) uslov.append(" AND ");
+            uslov.append("p.kategorija = ").append(kategorija.getIdKategorija());
+        }
+
+        return uslov.toString();
     }
 }

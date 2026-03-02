@@ -80,6 +80,14 @@ public class Racun implements OpstiDomenskiObjekat {
         this.stavkeRacuna = stavkeRacuna;
     }
 
+    public void izracunajUkupanIznos() {
+        double iznos = 0;
+        for (StavkaRacuna s : stavkeRacuna) {
+            iznos += s.getIznos();
+        }
+        ukupanIznos = iznos;
+    }
+    
     @Override
     public String vratiNazivTabele() {
         return "racun";
@@ -124,30 +132,30 @@ public class Racun implements OpstiDomenskiObjekat {
     public List<OpstiDomenskiObjekat> vratiListuIzRS(ResultSet rs) throws Exception {
         List<OpstiDomenskiObjekat> lista = new ArrayList<>();
         while (rs.next()) {
-            Long idPenjac = rs.getLong("penjac.idPenjac");
-            String ime =  rs.getString("penjac.ime");
-            String prezime = rs.getString("penjac.prezime");
-            int godine = rs.getInt("penjac.godine");
-            String email = rs.getString("penjac.email");
+            Long idPenjac = rs.getLong("p.idPenjac");
+            String ime =  rs.getString("p.ime");
+            String prezime = rs.getString("p.prezime");
+            int godine = rs.getInt("p.godine");
+            String email = rs.getString("p.email");
             
-            Long idKategorija = rs.getLong("kategorija.idKategorija");
-            String naziv = rs.getString("kategorija.naziv");
+            Long idKategorija = rs.getLong("k.idKategorija");
+            String naziv = rs.getString("k.naziv");
             
             Kategorija k = new Kategorija(idKategorija, naziv);
             Penjac p = new Penjac(idPenjac, ime, prezime, godine, email, k);
             
-            Long idZaposleni = rs.getLong("zaposleni.idZaposleni");
-            String imeZaposleni = rs.getString("zaposleni.ime");
-            String prezimeZaposleni = rs.getString("zaposleni.prezime");
-            String emailZaposleni = rs.getString("zaposleni.email");
-            String brTelefona = rs.getString("zaposleni.brTelefona");
-            String lozinka = rs.getString("zaposleni.lozinka");
+            Long idZaposleni = rs.getLong("z.idZaposleni");
+            String imeZaposleni = rs.getString("z.ime");
+            String prezimeZaposleni = rs.getString("z.prezime");
+            String emailZaposleni = rs.getString("z.email");
+            String brTelefona = rs.getString("z.brTelefona");
+            String lozinka = rs.getString("z.lozinka");
             
             Zaposleni z = new Zaposleni(idZaposleni, imeZaposleni, prezimeZaposleni, emailZaposleni, brTelefona, lozinka);
             
-            Long idRacun = rs.getLong("racun.idRacun");
-            LocalDateTime datumVreme = rs.getTimestamp("racun.datumVreme").toLocalDateTime();
-            double ukupanIznos = rs.getDouble("racun.ukupanIznos");
+            Long idRacun = rs.getLong("r.idRacun");
+            LocalDateTime datumVreme = rs.getTimestamp("r.datumVreme").toLocalDateTime();
+            double ukupanIznos = rs.getDouble("r.ukupanIznos");
             
             lista.add(new Racun(idRacun, z, p, datumVreme, ukupanIznos));
         }
@@ -157,33 +165,59 @@ public class Racun implements OpstiDomenskiObjekat {
     @Override
     public OpstiDomenskiObjekat vratiObjekatIzRS(ResultSet rs) throws Exception {
         if (rs.next()) {
-            Long idPenjac = rs.getLong("penjac.idPenjac");
-            String ime =  rs.getString("penjac.ime");
-            String prezime = rs.getString("penjac.prezime");
-            int godine = rs.getInt("penjac.godine");
-            String email = rs.getString("penjac.email");
+            Long idPenjac = rs.getLong("p.idPenjac");
+            String ime =  rs.getString("p.ime");
+            String prezime = rs.getString("p.prezime");
+            int godine = rs.getInt("p.godine");
+            String email = rs.getString("p.email");
             
-            Long idKategorija = rs.getLong("kategorija.idKategorija");
-            String naziv = rs.getString("kategorija.naziv");
+            Long idKategorija = rs.getLong("k.idKategorija");
+            String naziv = rs.getString("k.naziv");
             
             Kategorija k = new Kategorija(idKategorija, naziv);
+            
             Penjac p = new Penjac(idPenjac, ime, prezime, godine, email, k);
             
-            Long idZaposleni = rs.getLong("zaposleni.idZaposleni");
-            String imeZaposleni = rs.getString("zaposleni.ime");
-            String prezimeZaposleni = rs.getString("zaposleni.prezime");
-            String emailZaposleni = rs.getString("zaposleni.email");
-            String brTelefona = rs.getString("zaposleni.brTelefona");
-            String lozinka = rs.getString("zaposleni.lozinka");
+            Long idZaposleni = rs.getLong("z.idZaposleni");
+            String imeZaposleni = rs.getString("z.ime");
+            String prezimeZaposleni = rs.getString("z.prezime");
+            String emailZaposleni = rs.getString("z.email");
+            String brTelefona = rs.getString("z.brTelefona");
+            String lozinka = rs.getString("z.lozinka");
             
             Zaposleni z = new Zaposleni(idZaposleni, imeZaposleni, prezimeZaposleni, emailZaposleni, brTelefona, lozinka);
             
-            Long idRacun = rs.getLong("racun.idRacun");
-            LocalDateTime datumVreme = rs.getTimestamp("racun.datumVreme").toLocalDateTime();
-            double ukupanIznos = rs.getDouble("racun.ukupanIznos");
+            Long idRacun = rs.getLong("r.idRacun");
+            LocalDateTime datumVreme = rs.getTimestamp("r.datumVreme").toLocalDateTime();
+            double ukupanIznos = rs.getDouble("r.ukupanIznos");
             
             return new Racun(idRacun, z, p, datumVreme, ukupanIznos);
         }
         return null;
+    }
+
+    @Override
+    public String join() {
+        return "JOIN zaposleni z ON r.zaposleni = z.idZaposleni JOIN penjac p ON r.penjac = p.idPenjac JOIN kategorija k ON k.idKategorija = p.kategorija";
+    }
+
+    @Override
+    public String alias() {
+        return " r ";
+    }
+
+    @Override
+    public String uslovZaSelect() {
+        StringBuilder sb = new StringBuilder();
+    
+        if (zaposleni != null) {
+            sb.append("r.zaposleni = ").append(zaposleni.getIdZaposleni());
+        }
+        if (penjac != null) {
+            if (sb.length() > 0) sb.append(" AND ");
+            sb.append("r.penjac = ").append(penjac.getIdPenjac());
+        }
+
+        return sb.toString();
     }
 }
