@@ -5,6 +5,7 @@
 package modeli;
 
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
 import model.StavkaRacuna;
 
@@ -54,4 +55,27 @@ public class ModelTabeleStavkaRacuna extends AbstractTableModel {
     public List<StavkaRacuna> getStavke() {
         return stavke;
     }
+    
+//    @Override
+//    public boolean isCellEditable(int row, int column) {
+//        return column == 1;
+//    }
+//    
+//    @Override
+//    public void setValueAt(Object value, int row, int column) {
+//        if (column == 1) {
+//            try {
+//                int kolicina = Integer.parseInt(value.toString());
+//                if (kolicina <= 0) {
+//                    JOptionPane.showMessageDialog(null, "Kolicina mora biti pozitivan broj!");
+//                    return;
+//                }
+//                stavke.get(row).setKolicina(kolicina);
+//                stavke.get(row).postaviIznos();
+//                fireTableDataChanged();
+//            } catch (NumberFormatException e) {
+//                JOptionPane.showMessageDialog(null, "Kolicina mora biti ceo broj!");
+//            }
+//        }
+//    }
 }

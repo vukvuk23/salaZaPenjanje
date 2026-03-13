@@ -26,10 +26,10 @@ public class VratiUslugeSO extends ApstraktnaSO {
     @Override
     protected void izvrsiOperaciju(OpstiDomenskiObjekat odo) throws Exception {
         Usluga u = (Usluga) odo;
-        usluge = (List<Usluga>) repository.getAll(u, null); 
+        usluge = (List<Usluga>) repository.getAll(u); 
         
-        if(usluge == null){
-            System.out.println("Usluge nisu vracene!");
+        if(usluge.isEmpty()){
+            throw new Exception("Usluge nisu vracene!");
         }
     }
 

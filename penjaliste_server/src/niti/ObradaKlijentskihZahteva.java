@@ -47,8 +47,8 @@ public class ObradaKlijentskihZahteva extends Thread{
                 if(s.isClosed()){
                     System.out.println("Zatvoren klijentski soket od strane servera!");
                 } else {
+                    zaustaviNit();
                     System.out.println("Klijent se sam odvezao!");
-                    return;
                 }
             }
         }
@@ -89,10 +89,6 @@ public class ObradaKlijentskihZahteva extends Thread{
         }
     }
 
-    public Socket getS() {
-        return s;
-    }
-
     void zaustaviNit() {
         if(s != null && !s.isClosed()){
             try {
@@ -109,7 +105,7 @@ public class ObradaKlijentskihZahteva extends Thread{
         try {
             Zaposleni z = ControllerServer.getInstance().login((Zaposleni) zahtev.getParametar());
             System.out.println("Uspesna prijava na sistem...");
-            odgovor.setOdgovor(z); // postaviti zapolsenog zbogliste zaposlenih
+            odgovor.setOdgovor(z); // postaviti zapolsenog zbog liste zaposlenih
         } catch (Exception ex) {
             ex.printStackTrace();
             odgovor.setEx(ex);

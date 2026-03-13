@@ -94,7 +94,7 @@ public class Komunikacija {
         return (Odgovor) reciever.recieve();
     }
 
-    public Odgovor izmeniRacun(Zahtev zahtev) throws Exception {
+    public Odgovor promeniRacun(Zahtev zahtev) throws Exception {
         sender.send(zahtev);
         System.out.println("Poslat zahtev za promenu racuna...");
         return (Odgovor) reciever.recieve();

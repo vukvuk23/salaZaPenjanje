@@ -4,9 +4,6 @@
  */
 package forme;
 
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import niti.Server;
 
 /**
@@ -34,6 +31,7 @@ public class ServerskaForma extends javax.swing.JFrame {
 
         jButtonPokreni = new javax.swing.JButton();
         jButtonZaustavi = new javax.swing.JButton();
+        jLabelStatus = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItemBaza = new javax.swing.JMenuItem();
@@ -54,6 +52,8 @@ public class ServerskaForma extends javax.swing.JFrame {
                 jButtonZaustaviActionPerformed(evt);
             }
         });
+
+        jLabelStatus.setText("Server nije pokrenut!");
 
         jMenu1.setText("Konfiguracija");
 
@@ -84,15 +84,20 @@ public class ServerskaForma extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButtonPokreni, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonZaustavi, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(176, Short.MAX_VALUE))
+                    .addComponent(jButtonZaustavi, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButtonPokreni, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabelStatus)))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(27, 27, 27)
-                .addComponent(jButtonPokreni, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonPokreni, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelStatus))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonZaustavi, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(16, Short.MAX_VALUE))
@@ -107,6 +112,7 @@ public class ServerskaForma extends javax.swing.JFrame {
             server.start();
             jButtonPokreni.setEnabled(false);
             jButtonZaustavi.setEnabled(true);
+            jLabelStatus.setText("Server je pokrenut!");
         }
     }//GEN-LAST:event_jButtonPokreniActionPerformed
 
@@ -114,7 +120,8 @@ public class ServerskaForma extends javax.swing.JFrame {
         if(server != null){
             server.zaustaviServer();
             jButtonPokreni.setEnabled(true);
-            jButtonZaustavi.setEnabled(false);
+            jButtonZaustavi.setEnabled(false);  
+            jLabelStatus.setText("Server je zaustavljen!");
         }
     }//GEN-LAST:event_jButtonZaustaviActionPerformed
 
@@ -166,6 +173,7 @@ public class ServerskaForma extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonPokreni;
     private javax.swing.JButton jButtonZaustavi;
+    private javax.swing.JLabel jLabelStatus;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItemBaza;

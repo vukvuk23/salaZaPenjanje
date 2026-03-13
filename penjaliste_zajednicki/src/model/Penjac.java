@@ -45,7 +45,7 @@ public class Penjac implements OpstiDomenskiObjekat{
         return idPenjac;
     }
 
-    public void setId(Long idPenjac) {
+    public void setIdPenjac (Long idPenjac) {
         this.idPenjac = idPenjac;
     }
 
@@ -159,14 +159,14 @@ public class Penjac implements OpstiDomenskiObjekat{
     public List<OpstiDomenskiObjekat> vratiListuIzRS(ResultSet rs) throws Exception {
         List<OpstiDomenskiObjekat> lista = new ArrayList<>();
         while (rs.next()) {
-            Long idPenjac = rs.getLong("idPenjac");
-            String ime = rs. getString("ime");
-            String prezime = rs. getString("prezime");
-            int godine = rs.getInt("godine");
-            String email = rs.getString("email");
+            Long idPenjac = rs.getLong("p.idPenjac");
+            String ime = rs. getString("p.ime");
+            String prezime = rs. getString("p.prezime");
+            int godine = rs.getInt("p.godine");
+            String email = rs.getString("p.email");
             
-            Long idKategorija = rs.getLong("idKategorija");
-            String naziv = rs.getString("naziv");
+            Long idKategorija = rs.getLong("k.idKategorija");
+            String naziv = rs.getString("k.naziv");
             
             Kategorija k = new Kategorija(idKategorija, naziv);
             
@@ -219,7 +219,14 @@ public class Penjac implements OpstiDomenskiObjekat{
             if (uslov.length() > 0) uslov.append(" AND ");
             uslov.append("p.kategorija = ").append(kategorija.getIdKategorija());
         }
-
+        if (email != null && !email.isEmpty()) {
+            if (uslov.length() > 0) uslov.append(" AND ");
+            uslov.append("p.email = '").append(email).append("'");
+        }
+        if (godine > 0) {
+            if (uslov.length() > 0) uslov.append(" AND ");
+            uslov.append("p.godine = ").append(godine);
+        }
         return uslov.toString();
     }
 }

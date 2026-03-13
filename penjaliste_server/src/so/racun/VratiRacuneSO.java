@@ -27,12 +27,12 @@ public class VratiRacuneSO extends ApstraktnaSO {
     @Override
     protected void izvrsiOperaciju(OpstiDomenskiObjekat odo) throws Exception {
         Racun r = (Racun) odo;
-        racuni = (List<Racun>) (List<?>) repository.getAll(r, "");
+        racuni = repository.getAll(r);
 
         for (Racun racun : racuni) {
             StavkaRacuna sr = new StavkaRacuna();
             sr.setRacun(racun);
-            List<StavkaRacuna> stavke = (List<StavkaRacuna>) (List<?>) repository.getAll(new StavkaRacuna(), sr.uslovZaSelect());
+            List<StavkaRacuna> stavke = repository.getAll(sr);
             racun.setStavkeRacuna(stavke);
         }
     }

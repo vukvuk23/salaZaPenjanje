@@ -64,7 +64,7 @@ public class ZaposleniSmena implements OpstiDomenskiObjekat {
 
     @Override
     public String vratiNazivTabele() {
-        return "zaposlensimena";
+        return "zaposlenisimena";
     }
 
     @Override
@@ -76,9 +76,9 @@ public class ZaposleniSmena implements OpstiDomenskiObjekat {
     public String vratiVrednostiZaInsert() {
         StringBuilder sb = new StringBuilder();
         sb.append(zaposleni.getIdZaposleni()).append(", ")
-          .append(smena.getIdSmena()).append(", '")
-          .append(datum).append("', '")
-          .append(napomena).append("'");
+          .append(smena.getIdSmena()).append(", ")
+          .append("'").append(datum).append("', ")
+          .append("'").append(napomena).append("'");
         return sb.toString();
     }
 

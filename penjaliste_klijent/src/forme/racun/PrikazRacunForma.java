@@ -46,6 +46,7 @@ public class PrikazRacunForma extends javax.swing.JFrame {
         jButtonPretrazi = new javax.swing.JButton();
         jButtonPrikaziSve = new javax.swing.JButton();
         jButtonOdustani = new javax.swing.JButton();
+        jButtonDetaljiRacuna = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -99,36 +100,52 @@ public class PrikazRacunForma extends javax.swing.JFrame {
         });
 
         jButtonOdustani.setText("Odustani");
+        jButtonOdustani.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonOdustaniActionPerformed(evt);
+            }
+        });
+
+        jButtonDetaljiRacuna.setText("Detalji racuna");
+        jButtonDetaljiRacuna.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDetaljiRacunaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 773, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButtonKreirajRacun)
-                        .addGap(213, 213, 213)
-                        .addComponent(jButtonPromeniRacun)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButtonOdustani)))
+                        .addGap(202, 202, 202)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
+                        .addGap(27, 27, 27)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jComboBoxZaposleni, 0, 213, Short.MAX_VALUE)
+                            .addComponent(jComboBoxPenjac, 0, 213, Short.MAX_VALUE))
+                        .addGap(38, 38, 38)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButtonPretrazi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonPrikaziSve, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 773, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButtonDetaljiRacuna)
+                                .addGap(97, 97, 97)
+                                .addComponent(jButtonKreirajRacun)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButtonPromeniRacun)
+                                .addGap(129, 129, 129)
+                                .addComponent(jButtonOdustani)))))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(202, 202, 202)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
-                .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jComboBoxZaposleni, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBoxPenjac, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(38, 38, 38)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButtonPrikaziSve, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonPretrazi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -143,14 +160,15 @@ public class PrikazRacunForma extends javax.swing.JFrame {
                     .addComponent(jComboBoxPenjac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
                     .addComponent(jButtonPrikaziSve))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonPromeniRacun)
                     .addComponent(jButtonKreirajRacun)
-                    .addComponent(jButtonOdustani))
-                .addContainerGap(16, Short.MAX_VALUE))
+                    .addComponent(jButtonOdustani)
+                    .addComponent(jButtonDetaljiRacuna))
+                .addGap(32, 32, 32))
         );
 
         pack();
@@ -159,19 +177,22 @@ public class PrikazRacunForma extends javax.swing.JFrame {
     private void jButtonPromeniRacunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPromeniRacunActionPerformed
         int selektovaniRed = jTableRacuni.getSelectedRow();
         if (selektovaniRed == -1) {
-            JOptionPane.showMessageDialog(this, "Nije odabran nijedan racun!", "Greska!", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Racun za promenu nije izabran!", "Greska!", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
         ModelTabeleRacuni mtr = (ModelTabeleRacuni) jTableRacuni.getModel();
         Racun r = mtr.getRacuni().get(selektovaniRed);
-
-        DodajPromeniRacunForma dprf = new DodajPromeniRacunForma(r);
-        dprf.setVisible(true);
+        try{
+            DodajPromeniRacunForma dprf = new DodajPromeniRacunForma(this, r);
+            JOptionPane.showMessageDialog(this, "Sistem je nasao racun!", "Uspeh!", JOptionPane.INFORMATION_MESSAGE);
+            dprf.setVisible(true);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Sistem ne moze da nadje racun!", "Greska!", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButtonPromeniRacunActionPerformed
 
     private void jButtonKreirajRacunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonKreirajRacunActionPerformed
-        DodajPromeniRacunForma dprf = new DodajPromeniRacunForma(null);
+        DodajPromeniRacunForma dprf = new DodajPromeniRacunForma(this, null);
         dprf.setVisible(true);
     }//GEN-LAST:event_jButtonKreirajRacunActionPerformed
 
@@ -179,14 +200,17 @@ public class PrikazRacunForma extends javax.swing.JFrame {
          try {
             Zaposleni z = (Zaposleni) jComboBoxZaposleni.getSelectedItem();
             Penjac p = (Penjac) jComboBoxPenjac.getSelectedItem();
-
+            
             Racun r = new Racun();
             r.setZaposleni(z);
             r.setPenjac(p);
 
             List<Racun> racuni = ControllerClient.getInstance().pretraziRacune(r);
+            
             ModelTabeleRacuni mtr = new ModelTabeleRacuni(racuni);
             jTableRacuni.setModel(mtr);
+            
+            JOptionPane.showMessageDialog(this, "Sistem je nasao racune po zadatim kriterijumima!", "Uspeh", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Greska!", JOptionPane.ERROR_MESSAGE);
         }
@@ -198,7 +222,31 @@ public class PrikazRacunForma extends javax.swing.JFrame {
         popuniTabelu();
     }//GEN-LAST:event_jButtonPrikaziSveActionPerformed
 
+    private void jButtonOdustaniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOdustaniActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jButtonOdustaniActionPerformed
+
+    private void jButtonDetaljiRacunaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDetaljiRacunaActionPerformed
+        int selektovaniRed = jTableRacuni.getSelectedRow();
+        if (selektovaniRed == -1) {
+            JOptionPane.showMessageDialog(this, "Racun nije odabran!", "Greska!", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        ModelTabeleRacuni mtr = (ModelTabeleRacuni) jTableRacuni.getModel();
+        Racun r = mtr.getRacuni().get(selektovaniRed);
+        
+        try {
+            JOptionPane.showMessageDialog(this, "Sistem je nasao racun!", "Uspeh!", JOptionPane.INFORMATION_MESSAGE);
+            DetaljiRacunaForma drf = new DetaljiRacunaForma(r);
+            drf.setVisible(true);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Sistem ne moze da nadje racun!", "Greska!", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButtonDetaljiRacunaActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonDetaljiRacuna;
     private javax.swing.JButton jButtonKreirajRacun;
     private javax.swing.JButton jButtonOdustani;
     private javax.swing.JButton jButtonPretrazi;
@@ -233,7 +281,7 @@ public class PrikazRacunForma extends javax.swing.JFrame {
         popuniTabelu();
     }
 
-    private void popuniTabelu() {
+    public void popuniTabelu() {
         try {
             List<Racun> racuni = ControllerClient.getInstance().vratiRacune();
             ModelTabeleRacuni mtr = new ModelTabeleRacuni(racuni);

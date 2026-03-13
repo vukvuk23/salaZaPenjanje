@@ -52,7 +52,7 @@
                       <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                       <Component id="jButtonOdustani" min="-2" pref="133" max="-2" attributes="0"/>
                       <EmptySpace pref="52" max="32767" attributes="0"/>
-                      <Component id="jButtonSacuvaj" min="-2" pref="133" max="-2" attributes="0"/>
+                      <Component id="jButtonDogadjaj" min="-2" pref="133" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
@@ -96,7 +96,7 @@
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jButtonOdustani" max="32767" attributes="0"/>
-                  <Component id="jButtonSacuvaj" pref="47" max="32767" attributes="0"/>
+                  <Component id="jButtonDogadjaj" pref="47" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -161,12 +161,12 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonOdustaniActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButtonSacuvaj">
+    <Component class="javax.swing.JButton" name="jButtonDogadjaj">
       <Properties>
         <Property name="text" type="java.lang.String" value="Sacuvaj"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonSacuvajActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonDogadjajActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

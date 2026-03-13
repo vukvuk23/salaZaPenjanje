@@ -19,17 +19,17 @@ public class VratiKategorijeSO extends ApstraktnaSO {
     @Override
     protected void preduslov(OpstiDomenskiObjekat odo) throws Exception {
         if (odo == null || !(odo instanceof Kategorija)) {
-            throw new Exception("Prosledjeni objekat nije instanca klase Penjac!");
+            throw new Exception("Prosledjeni objekat nije instanca klase Kategorija!");
         }
     }
 
     @Override
     protected void izvrsiOperaciju(OpstiDomenskiObjekat odo) throws Exception {
         Kategorija k = (Kategorija) odo;
-        kategorije = (List<Kategorija>) repository.getAll(k, null); 
+        kategorije = repository.getAll(k); 
         
-        if(kategorije == null){
-            System.out.println("Kategorije nisu vracene!");
+        if(kategorije.isEmpty()){
+            throw new Exception("Kategorije nisu vracene!");
         }
     }
 

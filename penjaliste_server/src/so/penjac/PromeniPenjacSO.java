@@ -38,11 +38,11 @@ public class PromeniPenjacSO extends ApstraktnaSO{
             throw new Exception("Kategorija penjaca mora biti izabrana!");
         }
         
-        String uslov = " WHERE p.ime = '" + p.getIme() + "' AND p.prezime = '" + p.getPrezime() + "' AND p.email = '" + p.getEmail() + "' AND p.idPenjac != " + p.getIdPenjac();
+       
         // mozda getAll()
-        Penjac vecPostojeci = (Penjac) repository.get(p, uslov);
+        Penjac vecPostojeci = (Penjac) repository.get(p);
         if (vecPostojeci != null) {
-            throw new Exception("Sistem ne moze da izmeni penjaca. Penjac vec postoji!");
+            throw new Exception("Penjac vec postoji!");
         }
     }
 

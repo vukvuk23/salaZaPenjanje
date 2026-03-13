@@ -4,7 +4,6 @@
  */
 package controller;
 
-import java.io.IOException;
 import java.util.List;
 import komunikacija.Komunikacija;
 import komunikacija.Odgovor;
@@ -30,7 +29,7 @@ public class ControllerClient {
     }
     
     public static ControllerClient getInstance(){
-        if(instance==null) instance=new ControllerClient();
+        if(instance == null) instance = new ControllerClient();
         return instance;
     }
 
@@ -167,9 +166,9 @@ public class ControllerClient {
         }
     }
 
-    public void izmeniRacun(Racun r) throws Exception {
+    public void promeniRacun(Racun r) throws Exception {
         Zahtev zahtev = new Zahtev(Operacije.PROMENI_RACUN, r);
-        Odgovor odgovor = Komunikacija.getInstance().izmeniRacun(zahtev);
+        Odgovor odgovor = Komunikacija.getInstance().promeniRacun(zahtev);
         
         if(odgovor.getEx() == null){
             

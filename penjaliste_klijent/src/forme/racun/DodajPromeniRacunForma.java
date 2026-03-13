@@ -9,8 +9,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import model.Penjac;
 import model.Racun;
@@ -24,14 +22,16 @@ import modeli.ModelTabeleStavkaRacuna;
  * @author Administrator
  */
 public class DodajPromeniRacunForma extends javax.swing.JFrame {
+    private PrikazRacunForma prf;
     private Racun r;
     private List<StavkaRacuna> stavkeRacuna = new ArrayList<>();
     /**
      * Creates new form DodajPromeniRacunForma
      */
-    public DodajPromeniRacunForma(Racun r) {
+    public DodajPromeniRacunForma(PrikazRacunForma prf, Racun r) {
         initComponents();
         this.r = r;
+        this.prf = prf;
         if(r != null){
             stavkeRacuna = r.getStavkeRacuna();
         }
@@ -254,8 +254,23 @@ public class DodajPromeniRacunForma extends javax.swing.JFrame {
         }
         
         
-        StavkaRacuna sr = new StavkaRacuna(r, Integer.parseInt(kolicina), usluga);
-        stavkeRacuna.add(sr);
+        int kol = Integer.parseInt(kolicina);
+
+        StavkaRacuna vecPostiji = null;
+        for (StavkaRacuna sr : stavkeRacuna) {
+            if (sr.getUsluga().getNaziv().equals(usluga.getNaziv())) {
+                vecPostiji = sr;
+                break;
+            }
+        }
+
+        if (vecPostiji != null) {
+            vecPostiji.setKolicina(kol);
+            vecPostiji.postaviIznos();
+        } else {
+            StavkaRacuna sr = new StavkaRacuna(r, kol, usluga);
+            stavkeRacuna.add(sr);
+        }
         
         popuniTabeluStavki();
         jComboBoxUsluge.setSelectedIndex(-1);
@@ -287,7 +302,6 @@ public class DodajPromeniRacunForma extends javax.swing.JFrame {
                 racun.setPenjac(p);
                 racun.setDatumVreme(LocalDateTime.now());
                 racun.setStavkeRacuna(stavkeRacuna);
-                racun.izracunajUkupanIznos();
                 ControllerClient.getInstance().kreirajRacun(racun);
                 JOptionPane.showMessageDialog(this, "Sistem je zapamtio racun!", "Uspeh!", JOptionPane.INFORMATION_MESSAGE);
             } else {
@@ -296,12 +310,13 @@ public class DodajPromeniRacunForma extends javax.swing.JFrame {
                 r.setDatumVreme(LocalDateTime.now());
                 r.setStavkeRacuna(stavkeRacuna);
                 r.izracunajUkupanIznos();
-                ControllerClient.getInstance().izmeniRacun(r);
+                ControllerClient.getInstance().promeniRacun(r);
                 JOptionPane.showMessageDialog(this, "Sistem je promenio racun!", "Uspeh!", JOptionPane.INFORMATION_MESSAGE);
             }
-
+            prf.popuniTabelu();
             this.dispose();
         } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Sistem ne moze da zapamti racun!", "Greska!", JOptionPane.ERROR_MESSAGE);
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Greska!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButtonSacuvajActionPerformed
@@ -354,8 +369,8 @@ public class DodajPromeniRacunForma extends javax.swing.JFrame {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
             jTextFieldDatumIVreme.setText(LocalDateTime.now().format(formatter));
             
-            jTextFieldUkupanIznos.setEditable(false);
-            jTextFieldDatumIVreme.setEditable(false);
+            jTextFieldUkupanIznos.setEnabled(false);
+            jTextFieldDatumIVreme.setEnabled(false);
             popuniTabeluStavki();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Greska!", JOptionPane.ERROR_MESSAGE);
@@ -372,7 +387,6 @@ public class DodajPromeniRacunForma extends javax.swing.JFrame {
         jTextFieldUkupanIznos.setText(String.valueOf(r.getUkupanIznos()));
         
         popuniTabeluStavki();
-        jTextFieldDatumIVreme.setEditable(true);
     }
 
     private void popuniTabeluStavki() {

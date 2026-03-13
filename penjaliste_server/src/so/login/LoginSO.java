@@ -33,8 +33,7 @@ public class LoginSO extends ApstraktnaSO{
     @Override
     protected void izvrsiOperaciju(OpstiDomenskiObjekat odo) throws Exception {
         Zaposleni z = (Zaposleni) odo;
-        String uslov = " WHERE email = '" + z.getEmail() + "' AND lozinka = '" + z.getLozinka() + "'";
-        ulogovani = (Zaposleni) repository.get(z, uslov);
+        ulogovani =   (Zaposleni) repository.get(z);
         if(ulogovani == null){
             throw new Exception("Email i sifra nisu ispravni!");
         }
@@ -43,5 +42,4 @@ public class LoginSO extends ApstraktnaSO{
     public Zaposleni getUlogovani() {
         return ulogovani;
     }
-    
 }

@@ -100,10 +100,13 @@ public class LoginForma extends javax.swing.JFrame {
             ControllerClient.getInstance().setUlogovani(z);
             
             JOptionPane.showMessageDialog(this, "Email i sifra su ispravni!", "Uspeh!", JOptionPane.INFORMATION_MESSAGE);
-            
-            GlavnaForma gf = new GlavnaForma();
-            gf.setVisible(true);
-            this.dispose();
+            try {
+                GlavnaForma gf = new GlavnaForma();
+                gf.setVisible(true);
+                this.dispose();
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Ne moze da se otvori glavna forma i meni!", "Greska!", JOptionPane.ERROR_MESSAGE);
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Greska!", JOptionPane.ERROR_MESSAGE);
@@ -155,8 +158,8 @@ public class LoginForma extends javax.swing.JFrame {
 
     private void validiraj(String email, String lozinka) throws Exception {
         String error = "";
-        if (email.isEmpty()) {
-            error += "Polje email ne moze biti prazno!\n";
+        if (!email.contains("@")) {
+            error += "Email nije ispravnog formata!\n";
         }
         if (lozinka.isEmpty()) {
             error += "Polje lozinka ne moze biti prazno!\n";

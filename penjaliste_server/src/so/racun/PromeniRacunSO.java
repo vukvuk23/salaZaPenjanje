@@ -14,48 +14,44 @@ import so.ApstraktnaSO;
  *
  * @author Administrator
  */
-public class PromeniRacunSO extends ApstraktnaSO {
+public class PromeniRacunSO extends ApstraktnaSO{
     @Override
     protected void preduslov(OpstiDomenskiObjekat odo) throws Exception {
         if (!(odo instanceof Racun)) {
             throw new Exception("Prosledjeni objekat nije instanca klase Racun!");
         }
 
-        Racun racun = (Racun) odo;
+        Racun r = (Racun) odo;
 
-        if (racun.getZaposleni() == null) {
-            throw new Exception("Zaposleni nije izabran!");
+        if (r.getZaposleni() == null) {
+            throw new Exception("Zaposleni mora biti izabran!");
         }
-        if (racun.getPenjac() == null) {
-            throw new Exception("Penjac nije izabran!");
+        if (r.getPenjac() == null) {
+            throw new Exception("Penjac mora biti izabran!");
         }
-        if (racun.getStavkeRacuna() == null || racun.getStavkeRacuna().isEmpty()) {
+        if (r.getStavkeRacuna() == null || r.getStavkeRacuna().isEmpty()) {
             throw new Exception("Racun mora imati bar jednu stavku!");
         }
     }
 
     @Override
     protected void izvrsiOperaciju(OpstiDomenskiObjekat odo) throws Exception {
-        Racun racun = (Racun) odo;
+        Racun r = (Racun) odo;
 
-        racun.izracunajUkupanIznos();
+        r.izracunajUkupanIznos();
 
-        // 1) update racuna
-        repository.edit(racun);
+        repository.edit(r);
 
-        // 2) obrisi sve stare stavke ovog racuna
-        StavkaRacuna pomocna = new StavkaRacuna();
-        pomocna.setRacun(racun);
-        List<OpstiDomenskiObjekat> stareStavke = repository.getAll(pomocna, pomocna.uslovZaSelect());
-        for (OpstiDomenskiObjekat o : stareStavke) {
-            repository.delete(o);
+        StavkaRacuna sr = new StavkaRacuna();
+        sr.setRacun(r);
+        List<StavkaRacuna> stavke = repository.getAll(sr);
+        for (StavkaRacuna s : stavke) {
+            repository.delete(s);
         }
 
-        // 3) insertuj nove stavke
-        for (StavkaRacuna s : racun.getStavkeRacuna()) {
-            s.setRacun(racun);
+        for (StavkaRacuna s : r.getStavkeRacuna()) {
+            s.setRacun(r);
             repository.add(s);
         }
     }
-    
 }

@@ -7,6 +7,7 @@ package so.racun;
 import java.util.List;
 import model.OpstiDomenskiObjekat;
 import model.Racun;
+import model.StavkaRacuna;
 import so.ApstraktnaSO;
 
 /**
@@ -32,9 +33,17 @@ public class PretraziRacunSO extends ApstraktnaSO {
     @Override
     protected void izvrsiOperaciju(OpstiDomenskiObjekat odo) throws Exception {
         Racun racun = (Racun) odo;
-        racuni = repository.getAll(racun, racun.uslovZaSelect());
+        racuni = repository.getAll(racun);
+        
+        for (Racun r : racuni) {
+            StavkaRacuna sr = new StavkaRacuna();
+            sr.setRacun(r);
+            List<StavkaRacuna> stavke = repository.getAll(sr);
+            r.setStavkeRacuna(stavke);
+        }
+        
         if (racuni.isEmpty()) {
-            throw new Exception("Ne postoje racuni po zadatim kriterijumima!");
+            throw new Exception("Sistem ne moze da nadje racune po zadatim kriterijumima!");
         }
     }
 

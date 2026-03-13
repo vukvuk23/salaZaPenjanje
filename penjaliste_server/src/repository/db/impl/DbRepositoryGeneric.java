@@ -20,22 +20,23 @@ import java.sql.ResultSet;
 public class DbRepositoryGeneric implements DbRepository<OpstiDomenskiObjekat>{
 
     @Override
-    public List<OpstiDomenskiObjekat> getAll(OpstiDomenskiObjekat odo, String uslov) throws Exception {// nemamo where u uslovu
+    public List<OpstiDomenskiObjekat> getAll(OpstiDomenskiObjekat odo) throws Exception {
         try {
-            Connection connection = DbConnectionFactory.getInstance().getConnection();
+            Connection connection = DbConnectionFactory.getInstance().getConnection();  
             StringBuilder sb = new StringBuilder();
             sb.append("SELECT * FROM ").append(odo.vratiNazivTabele())
               .append(odo.alias()).append(odo.join());
-            if (uslov != null && !uslov.isEmpty()) {
-                sb.append(" WHERE ").append(uslov); 
+            String uslov = odo.uslovZaSelect();
+            if (uslov != null && !uslov.isEmpty()) {// zato sto kada se vracaju svi obj, nije potreban uslov
+                sb.append(" WHERE ").append(uslov);
             }
             String upit = sb.toString();
             System.out.println(upit);
             Statement st = connection.createStatement();
             ResultSet rs = st.executeQuery(upit);
             List<OpstiDomenskiObjekat> lista = odo.vratiListuIzRS(rs);
-            st.close();
             rs.close();
+            st.close();
             return lista;
         } catch (SQLException ex) {
             System.out.println("Greska pri metodi getAll: " + ex.getMessage());
@@ -48,14 +49,14 @@ public class DbRepositoryGeneric implements DbRepository<OpstiDomenskiObjekat>{
     public void add(OpstiDomenskiObjekat odo) throws Exception { 
         try {
             Connection connection = DbConnectionFactory.getInstance().getConnection();
-            StringBuilder sb = new StringBuilder();// nije thread safe
+            StringBuilder sb = new StringBuilder();
             sb.append("INSERT INTO ").append(odo.vratiNazivTabele())
               .append("(").append(odo.vratiKoloneZaInsert()).append(")")
               .append(" VALUES (").append(odo.vratiVrednostiZaInsert()).append(")");
             String upit = sb.toString();
             System.out.println(upit);
             Statement st = connection.createStatement();
-            st.executeUpdate(upit, Statement.RETURN_GENERATED_KEYS);// br redova na koje je naredba uticala
+            st.executeUpdate(upit, Statement.RETURN_GENERATED_KEYS);
             ResultSet rsKey = st.getGeneratedKeys();
             if(rsKey.next()){
                 Long id = rsKey.getLong(1);
@@ -110,13 +111,13 @@ public class DbRepositoryGeneric implements DbRepository<OpstiDomenskiObjekat>{
     }
 
     @Override
-    public OpstiDomenskiObjekat get(OpstiDomenskiObjekat odo, String uslov) throws Exception {// izbaciti iz parametara uslov i dodati metodu uslov() u odo
+    public OpstiDomenskiObjekat get(OpstiDomenskiObjekat odo) throws Exception {
         try {
             Connection connection = DbConnectionFactory.getInstance().getConnection();
             StringBuilder sb = new StringBuilder();
             sb.append("SELECT * FROM ").append(odo.vratiNazivTabele())
               .append(odo.alias()).append(odo.join())
-              .append(uslov);
+              .append("WHERE ").append(odo.uslovZaSelect());
             String upit = sb.toString();
             System.out.println(upit);
             Statement st = connection.createStatement();

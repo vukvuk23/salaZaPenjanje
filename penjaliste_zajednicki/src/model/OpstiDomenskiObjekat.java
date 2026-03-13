@@ -24,5 +24,4 @@ public interface OpstiDomenskiObjekat extends Serializable{
     public String join();
     public String alias();
     public String uslovZaSelect();
-    //public String uslov();
 }

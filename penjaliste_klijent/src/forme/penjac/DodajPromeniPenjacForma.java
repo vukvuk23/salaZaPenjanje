@@ -5,6 +5,7 @@
 package forme.penjac;
 
 import controller.ControllerClient;
+import forme.ModForme;
 import java.util.List;
 import javax.swing.JOptionPane;
 import model.Kategorija;
@@ -17,20 +18,16 @@ import model.Penjac;
 public class DodajPromeniPenjacForma extends javax.swing.JFrame {
     private PrikaziPenjacForma ppf;
     private Penjac p;
+    private ModForme mf;
     /** 
      * Creates new form DodajPenjacForma
      */
-    public DodajPromeniPenjacForma(PrikaziPenjacForma ppf, Penjac p) {
+    public DodajPromeniPenjacForma(PrikaziPenjacForma ppf, Penjac p, ModForme mf) {
         initComponents();
         this.ppf = ppf;
         this.p = p;
+        this.mf = mf;
         prepareView();
-        if (p != null) {
-            popuniPenjaca();
-            this.setTitle("Promena penjaca");
-        } else {
-            this.setTitle("Dodavanje penjaca");
-        }
     }
 
     /**
@@ -53,7 +50,7 @@ public class DodajPromeniPenjacForma extends javax.swing.JFrame {
         jTextFieldEmail = new javax.swing.JTextField();
         jComboBoxKateogrija = new javax.swing.JComboBox<>();
         jButtonOdustani = new javax.swing.JButton();
-        jButtonSacuvaj = new javax.swing.JButton();
+        jButtonDogadjaj = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -77,10 +74,10 @@ public class DodajPromeniPenjacForma extends javax.swing.JFrame {
             }
         });
 
-        jButtonSacuvaj.setText("Sacuvaj");
-        jButtonSacuvaj.addActionListener(new java.awt.event.ActionListener() {
+        jButtonDogadjaj.setText("Sacuvaj");
+        jButtonDogadjaj.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonSacuvajActionPerformed(evt);
+                jButtonDogadjajActionPerformed(evt);
             }
         });
 
@@ -112,7 +109,7 @@ public class DodajPromeniPenjacForma extends javax.swing.JFrame {
                         .addGap(14, 14, 14)
                         .addComponent(jButtonOdustani, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
-                        .addComponent(jButtonSacuvaj, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jButtonDogadjaj, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -145,15 +142,23 @@ public class DodajPromeniPenjacForma extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButtonOdustani, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonSacuvaj, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE))
+                    .addComponent(jButtonDogadjaj, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButtonSacuvajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSacuvajActionPerformed
+    private void jButtonDogadjajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDogadjajActionPerformed
         try {
+            if (mf == ModForme.OBRISI) {
+                ControllerClient.getInstance().obrisiPenjaca(p);
+                JOptionPane.showMessageDialog(this, "Sistem je obrisao penjaca!", "Uspeh!", JOptionPane.INFORMATION_MESSAGE);
+                ppf.prepareView();
+                this.dispose();
+                return;
+            }
+            
             String ime = jTextFieldIme.getText().trim();
             String prezime = jTextFieldPrezime.getText().trim();
             String email = jTextFieldEmail.getText().trim();
@@ -162,34 +167,35 @@ public class DodajPromeniPenjacForma extends javax.swing.JFrame {
             
             validiraj(ime, prezime, email, godine, k);
 
-            if (p == null) {
+            if (mf == ModForme.DODAJ) {
                 Penjac penjac = new Penjac(null, ime, prezime, Integer.valueOf(godine), email, k);
                 ControllerClient.getInstance().kreirajPenjaca(penjac);
                 JOptionPane.showMessageDialog(this, "Sistem je zapamtio penjaca!", "Uspeh!", JOptionPane.INFORMATION_MESSAGE);
-            } else {
+            } else if (mf == ModForme.IZMENI) {
                 p.setIme(ime);
                 p.setPrezime(prezime);
                 p.setGodine(Integer.valueOf(godine));
                 p.setEmail(email);
                 p.setKategorija(k);
                 ControllerClient.getInstance().promeniPenjaca(p);
-                JOptionPane.showMessageDialog(this, "Sistem je promenio penjaca!", "Uspeh!", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Sistem je zapamtio penjaca!", "Uspeh!", JOptionPane.INFORMATION_MESSAGE);
             }
 
             ppf.prepareView();
             this.dispose();
         } catch (Exception ex) {
             ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Sistem ne moze da zapamti penjaca!", "Greska!", JOptionPane.ERROR_MESSAGE);
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Greska!", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_jButtonSacuvajActionPerformed
+    }//GEN-LAST:event_jButtonDogadjajActionPerformed
 
     private void jButtonOdustaniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOdustaniActionPerformed
         this.dispose();
     }//GEN-LAST:event_jButtonOdustaniActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonDogadjaj;
     private javax.swing.JButton jButtonOdustani;
-    private javax.swing.JButton jButtonSacuvaj;
     private javax.swing.JComboBox<Object> jComboBoxKateogrija;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -214,6 +220,8 @@ public class DodajPromeniPenjacForma extends javax.swing.JFrame {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Greska!", JOptionPane.ERROR_MESSAGE);
         }
+        
+        podesiMod();
     }
 
     private void validiraj(String ime, String prezime, String email, String godine, Kategorija k) throws Exception {
@@ -225,10 +233,9 @@ public class DodajPromeniPenjacForma extends javax.swing.JFrame {
         if (prezime.isEmpty()) {
             error += "Polje prezime ne moze biti prazno!\n";
         }
-        if (email.isEmpty()) {
-            error += "Polje email ne moze biti prazno!\n";
+        if (!email.contains("@")) {
+            error += "Email nije ispravnog formata!\n";
         }
-
         if (godine.isEmpty()) {
             error += "Polje godine ne moze biti prazno!\n";
         } else {
@@ -241,11 +248,10 @@ public class DodajPromeniPenjacForma extends javax.swing.JFrame {
                 error += "Godine moraju biti ceo broj!\n";
             }
         }
-
         if (k == null) {
             error += "Morate izabrati kategoriju!\n";
         }
-
+        
         if (!error.isEmpty()) {
             throw new Exception(error);
         }
@@ -257,5 +263,33 @@ public class DodajPromeniPenjacForma extends javax.swing.JFrame {
         jTextFieldGodine.setText(String.valueOf(p.getGodine()));
         jTextFieldEmail.setText(p.getEmail());
         jComboBoxKateogrija.setSelectedItem(p.getKategorija());
+    }
+
+    private void podesiMod() {
+        if (mf == ModForme.DODAJ) {
+            this.setTitle("Dodavanje penjaca");
+        } else if (mf == ModForme.IZMENI) {
+            popuniPenjaca();
+            this.setTitle("Promena penjaca");
+        } else if (mf == ModForme.OBRISI) {
+            popuniPenjaca();
+            jTextFieldIme.setEditable(false);
+            jTextFieldPrezime.setEditable(false);
+            jTextFieldGodine.setEditable(false);
+            jTextFieldEmail.setEditable(false);
+            jComboBoxKateogrija.setEnabled(false);
+            jButtonDogadjaj.setText("Obrisi");
+            this.setTitle("Brisanje penjaca");
+        } else if (mf == ModForme.DETALJAN_PRIKAZ) {
+            popuniPenjaca();
+            jTextFieldIme.setEditable(false);
+            jTextFieldPrezime.setEditable(false);
+            jTextFieldGodine.setEditable(false);
+            jTextFieldEmail.setEditable(false);
+            jComboBoxKateogrija.setEnabled(false);
+            jButtonDogadjaj.setVisible(false);
+            jButtonOdustani.setText("Nazad");
+            this.setTitle("Prikaz penjaca");
+        }
     }
 }

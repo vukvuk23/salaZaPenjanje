@@ -25,11 +25,11 @@ public class VratiPenjaceSO extends ApstraktnaSO {
 
     @Override
     protected void izvrsiOperaciju(OpstiDomenskiObjekat odo) throws Exception {
-        Penjac p = (Penjac) odo;;
-        penjaci = (List<Penjac>) repository.getAll(p, null); 
+        Penjac p = (Penjac) odo;
+        penjaci = repository.getAll(p); 
         
-        if(penjaci == null){
-            System.out.println("Penjaci nisu vraceni!");
+        if(penjaci.isEmpty()){
+            System.out.println("Nema penjaca!");
         }
     }
 

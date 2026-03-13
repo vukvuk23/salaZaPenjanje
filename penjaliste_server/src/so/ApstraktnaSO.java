@@ -31,7 +31,9 @@ public abstract class ApstraktnaSO {
             System.out.println("Neuspesno izvrsena operacija!");
             ponistiTransakciju();
             throw ex;
-        }// da li fali disconnect
+        } finally {
+            ((DbRepository) repository).disconnect();
+        }
     }
 
     protected abstract void preduslov(OpstiDomenskiObjekat odo) throws Exception;

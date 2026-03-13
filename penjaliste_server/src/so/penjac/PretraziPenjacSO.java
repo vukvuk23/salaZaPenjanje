@@ -32,10 +32,10 @@ public class PretraziPenjacSO extends ApstraktnaSO{
     @Override
     protected void izvrsiOperaciju(OpstiDomenskiObjekat odo) throws Exception {
         Penjac p = (Penjac) odo;
-        penjaci = repository.getAll(p, p.uslovZaSelect());
+        penjaci = repository.getAll(p);
         
         if (penjaci.isEmpty()) {
-            throw new Exception("Ne postoje penjaci po zadatim kriterijumima");
+            throw new Exception("Sistem ne moze da nadje penjace po zadatim kriterijumima!");
         }
     }
 

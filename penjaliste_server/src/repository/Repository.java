@@ -11,9 +11,9 @@ import java.util.List;
  * @author Administrator
  */
 public interface Repository<T> {
-    List<T> getAll(T param, String uslov) throws Exception;
+    List<T> getAll(T param) throws Exception;
     void add(T param) throws Exception;
     void edit(T param) throws Exception;
     void delete(T param)throws Exception;
-    T get(T parametar, String uslov) throws Exception;
+    T get(T parametar) throws Exception;
 }

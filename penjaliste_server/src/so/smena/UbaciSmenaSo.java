@@ -36,7 +36,7 @@ public class UbaciSmenaSo extends ApstraktnaSO {
             throw new Exception("Vreme pocetka mora biti prije vremena kraja!");
         }
 
-        List<Smena> smene = repository.getAll(smena, null);
+        List<Smena> smene = repository.getAll(smena);
         for (Smena s : smene) {
             if (s.getNaziv().equalsIgnoreCase(smena.getNaziv())) {
                 throw new Exception("Smena sa tim nazivom vec postoji!");

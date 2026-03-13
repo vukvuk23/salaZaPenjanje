@@ -7,6 +7,7 @@ package model;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  *
@@ -80,9 +81,19 @@ public class StavkaRacuna implements OpstiDomenskiObjekat {
         this.iznos = iznos;
     }
 
+    public void postaviIznos(){
+        this.iznos = cena * kolicina;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        return hash;
+    }
+    
     @Override
     public String toString() {
-        return "StavkaRacuna{" + "rbr=" + rbr + ", kolicina=" + kolicina + ", cena=" + cena + ", iznos=" + iznos + ", usluga=" + usluga + ", racun=" + racun + '}';
+        return "StavkaRacuna{" + "rbr=" + rbr + ", kolicina=" + kolicina + ", cena=" + cena + ", iznos=" + iznos + ", usluga=" + usluga + ", racun=" + racun.getIdRacun() + '}';
     }
 
     @Override

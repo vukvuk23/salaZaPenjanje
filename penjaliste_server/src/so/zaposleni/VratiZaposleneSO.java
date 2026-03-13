@@ -26,10 +26,10 @@ public class VratiZaposleneSO extends ApstraktnaSO {
     @Override
     protected void izvrsiOperaciju(OpstiDomenskiObjekat odo) throws Exception {
         Zaposleni z = (Zaposleni) odo;
-        zaposleni = (List<Zaposleni>) repository.getAll(z, null); 
+        zaposleni = (List<Zaposleni>) repository.getAll(z); 
         
         if(zaposleni == null){
-            System.out.println("Zaposleni nisu vraceni!");
+            throw new Exception("Zaposleni nisu vraceni!");
         }
     }
 

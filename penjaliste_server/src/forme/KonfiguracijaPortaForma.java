@@ -83,7 +83,7 @@ public class KonfiguracijaPortaForma extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Port mora biti broj!", "Greska", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        if (port >= 0 && port <= 65335) {
+        if (port >= 0 && port <= 65535) {
             try {
                 Konfiguracija.getInstance().setProperty("port", port + "");
                 Konfiguracija.getInstance().sacuvajIzmene();

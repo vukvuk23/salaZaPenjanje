@@ -37,12 +37,10 @@ public class KreirajPenjacSO extends ApstraktnaSO {
         if (p.getKategorija() == null) {
             throw new Exception("Kategorija penjaca mora biti izabrana!");
         }
-        
-        String uslov = " WHERE p.ime = '" + p.getIme() + "' AND p.prezime = '" + p.getPrezime() + "'" + " AND p.email = '" + p.getEmail() + "'";
 
-        Penjac vecPostojeci = (Penjac) repository.get(p, uslov);
+        Penjac vecPostojeci = (Penjac) repository.get(p);
         if (vecPostojeci != null) {
-            throw new Exception("Sistem ne moze da zapamti penjaca. Penjac vec postoji!");
+            throw new Exception("Penjac vec postoji!");
         }
     }
 
@@ -51,5 +49,4 @@ public class KreirajPenjacSO extends ApstraktnaSO {
         Penjac p = (Penjac) odo;
         repository.add(p);
     }
-    
 }

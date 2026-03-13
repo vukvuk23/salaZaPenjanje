@@ -195,6 +195,14 @@ public class Zaposleni implements OpstiDomenskiObjekat {
 
     @Override
     public String uslovZaSelect() {
-        return "";
+        StringBuilder sb = new StringBuilder();
+         if (email != null && !email.isEmpty()) {
+            sb.append("z.email = '").append(email).append("'");
+        }
+        if (lozinka != null && !lozinka.isEmpty()) {
+            if (sb.length() > 0) sb.append(" AND ");
+            sb.append("z.lozinka = '").append(lozinka).append("'");
+        }
+        return sb.toString();
     }
 }

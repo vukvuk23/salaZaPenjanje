@@ -48,7 +48,7 @@ public class Kategorija implements OpstiDomenskiObjekat {
 
     @Override
     public int hashCode() {
-        int hash = 7;
+        int hash = 3;
         return hash;
     }
 
@@ -74,7 +74,7 @@ public class Kategorija implements OpstiDomenskiObjekat {
 
     @Override
     public String vratiKoloneZaInsert() {
-        return "naziv, popust";
+        return "naziv";
     }
 
     @Override
@@ -103,7 +103,6 @@ public class Kategorija implements OpstiDomenskiObjekat {
         while (rs.next()) {
             Long idKategorija = rs.getLong("idKategorija");
             String naziv = rs.getString("naziv");
-            int popust = rs.getInt("popust");
             
             lista.add(new Kategorija(idKategorija, naziv));
         }
@@ -115,7 +114,6 @@ public class Kategorija implements OpstiDomenskiObjekat {
         if (rs.next()) {
             Long idKategorija = rs.getLong("idKategorija");
             String naziv = rs.getString("naziv");
-            int popust = rs.getInt("popust");
             
             return new Kategorija(idKategorija, naziv);
         }
