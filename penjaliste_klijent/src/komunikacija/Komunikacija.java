@@ -88,9 +88,9 @@ public class Komunikacija {
         return (Odgovor) reciever.recieve();
     }
 
-    public Odgovor kreirajRacun(Zahtev zahtev) throws Exception {
+    public Odgovor ubaciRacun(Zahtev zahtev) throws Exception {
         sender.send(zahtev);
-        System.out.println("Poslat zahtev za kreiranje novog racuna...");
+        System.out.println("Poslat zahtev za ubacivanje novog racuna...");
         return (Odgovor) reciever.recieve();
     }
 
@@ -109,6 +109,18 @@ public class Komunikacija {
     public Odgovor ubaciSmenu(Zahtev zahtev) throws Exception {
         sender.send(zahtev);
         System.out.println("Poslat zahtev za ubacivanje smene...");
+        return (Odgovor) reciever.recieve();
+    }
+
+    public Odgovor vratiRacun(Zahtev zahtev) throws Exception {
+        sender.send(zahtev);
+        System.out.println("Poslat zahtev za vracanje jednog racuna...");
+        return (Odgovor) reciever.recieve();
+    }
+
+    public Odgovor vratiPenjaca(Zahtev zahtev) throws Exception {
+        sender.send(zahtev);
+        System.out.println("Poslat zahtev za vracanje jednog penjaca...");
         return (Odgovor) reciever.recieve();
     }
 }

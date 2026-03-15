@@ -198,7 +198,7 @@ public class Racun implements OpstiDomenskiObjekat {
 
     @Override
     public String join() {
-        return "JOIN zaposleni z ON r.zaposleni = z.idZaposleni JOIN penjac p ON r.penjac = p.idPenjac JOIN kategorija k ON k.idKategorija = p.kategorija";
+        return "JOIN zaposleni z ON r.zaposleni = z.idZaposleni JOIN penjac p ON r.penjac = p.idPenjac JOIN kategorija k ON k.idKategorija = p.kategorija ";
     }
 
     @Override
@@ -217,7 +217,10 @@ public class Racun implements OpstiDomenskiObjekat {
             if (sb.length() > 0) sb.append(" AND ");
             sb.append("r.penjac = ").append(penjac.getIdPenjac());
         }
-
+        if (datumVreme != null) {
+            if (sb.length() > 0) sb.append(" AND ");
+            sb.append("DATE(r.datumVreme) = '").append(datumVreme.toLocalDate()).append("'");
+        }
         return sb.toString();
     }
 }

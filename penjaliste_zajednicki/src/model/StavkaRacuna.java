@@ -87,10 +87,25 @@ public class StavkaRacuna implements OpstiDomenskiObjekat {
 
     @Override
     public int hashCode() {
-        int hash = 7;
+        int hash = 3;
         return hash;
     }
-    
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final StavkaRacuna other = (StavkaRacuna) obj;
+        return Objects.equals(this.rbr, other.rbr) && Objects.equals(this.racun.getIdRacun(), other.racun.getIdRacun());
+    }
+
     @Override
     public String toString() {
         return "StavkaRacuna{" + "rbr=" + rbr + ", kolicina=" + kolicina + ", cena=" + cena + ", iznos=" + iznos + ", usluga=" + usluga + ", racun=" + racun.getIdRacun() + '}';
@@ -210,6 +225,6 @@ public class StavkaRacuna implements OpstiDomenskiObjekat {
 
     @Override
     public String uslovZaSelect() {
-        return "sr.racun = " + racun.getIdRacun();
+        return " sr.racun = " + racun.getIdRacun();
     }
 }

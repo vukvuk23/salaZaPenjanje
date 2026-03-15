@@ -12,7 +12,7 @@ import so.ApstraktnaSO;
  *
  * @author Administrator
  */
-public class KreirajPenjacSO extends ApstraktnaSO {
+public class UbacijPenjacSO extends ApstraktnaSO {
 
     @Override
     protected void preduslov(OpstiDomenskiObjekat odo) throws Exception {

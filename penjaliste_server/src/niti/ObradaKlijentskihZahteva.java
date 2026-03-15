@@ -62,8 +62,8 @@ public class ObradaKlijentskihZahteva extends Thread{
                 return vratiPenjace(zahtev);
             case VRATI_KATEGORIJE:
                 return vratiKategorije(zahtev);
-            case KREIRAJ_PENJAC:
-                return kreirajPenjaca(zahtev);
+            case UBACI_PENJAC:
+                return ubaciPenjaca(zahtev);
             case PROMENI_PENJAC:
                 return promeniPenjaca(zahtev);
             case OBRISI_PENJAC:
@@ -76,14 +76,18 @@ public class ObradaKlijentskihZahteva extends Thread{
                 return vratiZaposlene(zahtev);
             case VRATI_USLUGE:
                 return vratiUsluge(zahtev);
-            case KREIRAJ_RACUN:
-                return kreirajRacun(zahtev);
+            case UBACI_RACUN:
+                return ubaciRacun(zahtev);
             case PROMENI_RACUN:
                 return promeniRacun(zahtev);
             case PRETRAZI_RACUN:
                 return pretraziRacune(zahtev);
             case UBACI_SMENA:
                 return ubaciSmenu(zahtev);
+            case VRATI_RACUN:
+                return vratiRacun(zahtev);
+            case VRATI_PENJAC:
+                return vratiPenjaca(zahtev);
             default:
                 throw new AssertionError();
         }
@@ -144,13 +148,13 @@ public class ObradaKlijentskihZahteva extends Thread{
         return odgovor;
     }
 
-    private Odgovor kreirajPenjaca(Zahtev zahtev) {
+    private Odgovor ubaciPenjaca(Zahtev zahtev) {
         Odgovor odgovor = new Odgovor();
         
         Penjac p = (Penjac) zahtev.getParametar();
         try {
-            ControllerServer.getInstance().kreirajPenjaca(p);
-            System.out.println("Uspeno kreiran novi penjac...");
+            ControllerServer.getInstance().ubaciPenjaca(p);
+            System.out.println("Uspeno ubacen novi penjac...");
             odgovor.setOdgovor(null);
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -253,13 +257,13 @@ public class ObradaKlijentskihZahteva extends Thread{
         return odgovor;
     }
 
-    private Odgovor kreirajRacun(Zahtev zahtev) {
+    private Odgovor ubaciRacun(Zahtev zahtev) {
         Odgovor odgovor = new Odgovor();
         
         Racun r = (Racun) zahtev.getParametar();
         try {
-            ControllerServer.getInstance().kreirajRacun(r);
-            System.out.println("Uspeno kreiran novi racun...");
+            ControllerServer.getInstance().ubaciRacun(r);
+            System.out.println("Uspeno ubacen novi racun...");
             odgovor.setOdgovor(null);
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -314,6 +318,38 @@ public class ObradaKlijentskihZahteva extends Thread{
             odgovor.setEx(ex);
         }
         
+        return odgovor;
+    }
+
+    private Odgovor vratiRacun(Zahtev zahtev) {
+        Odgovor odgovor = new Odgovor();
+    
+        Racun r = (Racun) zahtev.getParametar();
+        try {
+            Racun racun = ControllerServer.getInstance().vratiRacun(r);
+            System.out.println("Uspesno vracen racun...");
+            odgovor.setOdgovor(racun);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            odgovor.setEx(ex);
+        }
+
+        return odgovor;
+    }
+
+    private Odgovor vratiPenjaca(Zahtev zahtev) {
+        Odgovor odgovor = new Odgovor();
+    
+        Penjac p = (Penjac) zahtev.getParametar();
+        try {
+            Penjac penjac = ControllerServer.getInstance().vratiPenjaca(p);
+            System.out.println("Uspesno vracen penjac...");
+            odgovor.setOdgovor(penjac);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            odgovor.setEx(ex);
+        }
+
         return odgovor;
     }
 }

@@ -169,7 +169,7 @@ public class DodajPromeniPenjacForma extends javax.swing.JFrame {
 
             if (mf == ModForme.DODAJ) {
                 Penjac penjac = new Penjac(null, ime, prezime, Integer.valueOf(godine), email, k);
-                ControllerClient.getInstance().kreirajPenjaca(penjac);
+                ControllerClient.getInstance().ubaciPenjaca(penjac);
                 JOptionPane.showMessageDialog(this, "Sistem je zapamtio penjaca!", "Uspeh!", JOptionPane.INFORMATION_MESSAGE);
             } else if (mf == ModForme.IZMENI) {
                 p.setIme(ime);
@@ -185,8 +185,11 @@ public class DodajPromeniPenjacForma extends javax.swing.JFrame {
             this.dispose();
         } catch (Exception ex) {
             ex.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Sistem ne moze da zapamti penjaca!", "Greska!", JOptionPane.ERROR_MESSAGE);
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Greska!", JOptionPane.ERROR_MESSAGE);
+            if (mf == ModForme.OBRISI) {
+                JOptionPane.showMessageDialog(this, "Sistem ne moze da obrise penjaca!", "Greska!", JOptionPane.ERROR_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Sistem ne moze da zapamti penjaca!", "Greska!", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_jButtonDogadjajActionPerformed
 

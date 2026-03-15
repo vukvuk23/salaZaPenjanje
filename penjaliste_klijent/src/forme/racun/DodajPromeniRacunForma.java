@@ -61,7 +61,6 @@ public class DodajPromeniRacunForma extends javax.swing.JFrame {
         jTextFieldUkupanIznos = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableStavkeRacuna = new javax.swing.JTable();
-        jButtonObrisiStavku = new javax.swing.JButton();
         jButtonSacuvaj = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
@@ -69,6 +68,7 @@ public class DodajPromeniRacunForma extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jTextFieldKolicina = new javax.swing.JTextField();
         jButtonDodajStavku = new javax.swing.JButton();
+        jButtonObrisiStavku = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -140,13 +140,6 @@ public class DodajPromeniRacunForma extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTableStavkeRacuna);
 
-        jButtonObrisiStavku.setText("Obrisi stavku");
-        jButtonObrisiStavku.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonObrisiStavkuActionPerformed(evt);
-            }
-        });
-
         jButtonSacuvaj.setText("Sacuvaj");
         jButtonSacuvaj.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -154,7 +147,7 @@ public class DodajPromeniRacunForma extends javax.swing.JFrame {
             }
         });
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Dodaj stavku:"));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Stavke racuna:"));
 
         jLabel5.setText("Usluga:");
 
@@ -166,6 +159,13 @@ public class DodajPromeniRacunForma extends javax.swing.JFrame {
         jButtonDodajStavku.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonDodajStavkuActionPerformed(evt);
+            }
+        });
+
+        jButtonObrisiStavku.setText("Obrisi stavku");
+        jButtonObrisiStavku.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonObrisiStavkuActionPerformed(evt);
             }
         });
 
@@ -185,7 +185,8 @@ public class DodajPromeniRacunForma extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jTextFieldKolicina))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButtonObrisiStavku)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButtonDodajStavku)))
                 .addContainerGap())
         );
@@ -201,7 +202,9 @@ public class DodajPromeniRacunForma extends javax.swing.JFrame {
                     .addComponent(jTextFieldKolicina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonDodajStavku))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonDodajStavku)
+                    .addComponent(jButtonObrisiStavku)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -216,9 +219,7 @@ public class DodajPromeniRacunForma extends javax.swing.JFrame {
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButtonSacuvaj))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButtonObrisiStavku)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(133, Short.MAX_VALUE))
         );
@@ -228,13 +229,10 @@ public class DodajPromeniRacunForma extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButtonObrisiStavku)))
-                .addGap(14, 14, 14)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(16, 16, 16)
                 .addComponent(jButtonSacuvaj, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -294,15 +292,13 @@ public class DodajPromeniRacunForma extends javax.swing.JFrame {
 
             validirajRacun(z, p);
 
-            
-
             if (r == null) {
                 Racun racun = new Racun();
                 racun.setZaposleni(z);
                 racun.setPenjac(p);
                 racun.setDatumVreme(LocalDateTime.now());
                 racun.setStavkeRacuna(stavkeRacuna);
-                ControllerClient.getInstance().kreirajRacun(racun);
+                ControllerClient.getInstance().ubaciRacun(racun);
                 JOptionPane.showMessageDialog(this, "Sistem je zapamtio racun!", "Uspeh!", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 r.setZaposleni(z);
@@ -317,7 +313,6 @@ public class DodajPromeniRacunForma extends javax.swing.JFrame {
             this.dispose();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Sistem ne moze da zapamti racun!", "Greska!", JOptionPane.ERROR_MESSAGE);
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Greska!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButtonSacuvajActionPerformed
 

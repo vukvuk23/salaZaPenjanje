@@ -37,7 +37,7 @@ public class PrikaziPenjacForma extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTablePenjaci = new javax.swing.JTable();
-        jButtonkreirajNovogPenjaca = new javax.swing.JButton();
+        jButtonUbacijNovogPenjaca = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -67,10 +67,10 @@ public class PrikaziPenjacForma extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTablePenjaci);
 
-        jButtonkreirajNovogPenjaca.setText("Kreiraj novog penjaca");
-        jButtonkreirajNovogPenjaca.addActionListener(new java.awt.event.ActionListener() {
+        jButtonUbacijNovogPenjaca.setText("Ubaci novog penjaca");
+        jButtonUbacijNovogPenjaca.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonkreirajNovogPenjacaActionPerformed(evt);
+                jButtonUbacijNovogPenjacaActionPerformed(evt);
             }
         });
 
@@ -185,7 +185,7 @@ public class PrikaziPenjacForma extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jButtonkreirajDetaljiPenjaca, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonkreirajNovogPenjaca, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jButtonUbacijNovogPenjaca, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButtonPromeniPenjaca, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -211,7 +211,7 @@ public class PrikaziPenjacForma extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonkreirajNovogPenjaca)
+                    .addComponent(jButtonUbacijNovogPenjaca)
                     .addComponent(jButtonPromeniPenjaca)
                     .addComponent(jButtonObrisiPenjaca)
                     .addComponent(jButtonNazad)
@@ -222,10 +222,10 @@ public class PrikaziPenjacForma extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButtonkreirajNovogPenjacaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonkreirajNovogPenjacaActionPerformed
+    private void jButtonUbacijNovogPenjacaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUbacijNovogPenjacaActionPerformed
         DodajPromeniPenjacForma dppf = new DodajPromeniPenjacForma(this, null, ModForme.DODAJ);
         dppf.setVisible(true);
-    }//GEN-LAST:event_jButtonkreirajNovogPenjacaActionPerformed
+    }//GEN-LAST:event_jButtonUbacijNovogPenjacaActionPerformed
 
     private void jButtonPromeniPenjacaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPromeniPenjacaActionPerformed
         int selektovaniRed = jTablePenjaci.getSelectedRow();
@@ -236,11 +236,12 @@ public class PrikaziPenjacForma extends javax.swing.JFrame {
         ModelTabelePenjac mtp = (ModelTabelePenjac) jTablePenjaci.getModel();
         Penjac p = mtp.getPenjaci().get(selektovaniRed);
         try {
+            Penjac penjac = ControllerClient.getInstance().vratiPenjaca(p);
             DodajPromeniPenjacForma dppf = new DodajPromeniPenjacForma(this, p, ModForme.IZMENI);
             JOptionPane.showMessageDialog(this, "Sistem je nasao penjaca!", "Uspeh!", JOptionPane.INFORMATION_MESSAGE);
             dppf.setVisible(true);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Sistem ne moze da nadje penjaca!", "Greska!", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Greska!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButtonPromeniPenjacaActionPerformed
 
@@ -260,12 +261,9 @@ public class PrikaziPenjacForma extends javax.swing.JFrame {
             DodajPromeniPenjacForma dppf = new DodajPromeniPenjacForma(this, p, ModForme.OBRISI);
             JOptionPane.showMessageDialog(this, "Sistem je nasao penjaca!", "Uspeh!", JOptionPane.INFORMATION_MESSAGE);
             dppf.setVisible(true);
-//            ControllerClient.getInstance().obrisiPenjaca(p);
-//            JOptionPane.showMessageDialog(this, "Sistem je obrisao penjaca!", "Uspeh!", JOptionPane.INFORMATION_MESSAGE);
-//            popuniTabelu();
         } catch (Exception ex) {
             ex.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Sistem ne moze da obrise penjaca!", "Greska!", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Sistem ne moze da nadje penjaca!", "Greska!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButtonObrisiPenjacaActionPerformed
 
@@ -301,7 +299,7 @@ public class PrikaziPenjacForma extends javax.swing.JFrame {
 
     private void jButtonkreirajDetaljiPenjacaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonkreirajDetaljiPenjacaActionPerformed
         int selektovaniRed = jTablePenjaci.getSelectedRow();
-        if (selektovaniRed ==  -1) {
+        if (selektovaniRed == -1) {
             JOptionPane.showMessageDialog(this, "Penjac nije odabran!", "Greska!", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -310,11 +308,12 @@ public class PrikaziPenjacForma extends javax.swing.JFrame {
         Penjac p = mtp.getPenjaci().get(selektovaniRed);
         
         try {
+            Penjac penjac = ControllerClient.getInstance().vratiPenjaca(p);
             DodajPromeniPenjacForma dppf = new DodajPromeniPenjacForma(this, p, ModForme.DETALJAN_PRIKAZ);
             JOptionPane.showMessageDialog(this, "Sistem je nasao penjaca!", "Uspeh!", JOptionPane.INFORMATION_MESSAGE);
             dppf.setVisible(true);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Sistem ne moze da nadje penjaca!", "Greska!", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Greska!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButtonkreirajDetaljiPenjacaActionPerformed
 
@@ -324,8 +323,8 @@ public class PrikaziPenjacForma extends javax.swing.JFrame {
     private javax.swing.JButton jButtonPretrazi;
     private javax.swing.JButton jButtonPrikaziSve;
     private javax.swing.JButton jButtonPromeniPenjaca;
+    private javax.swing.JButton jButtonUbacijNovogPenjaca;
     private javax.swing.JButton jButtonkreirajDetaljiPenjaca;
-    private javax.swing.JButton jButtonkreirajNovogPenjaca;
     private javax.swing.JComboBox<Object> jComboBoxKategorija;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

@@ -7,39 +7,43 @@ package so.racun;
 import java.util.List;
 import model.OpstiDomenskiObjekat;
 import model.Racun;
+import model.StavkaRacuna;
 import so.ApstraktnaSO;
 
 /**
  *
  * @author Administrator
  */
-public class PretraziRacunSO extends ApstraktnaSO {
-    private List<Racun> racuni;
-    
+public class VratiRacunSO extends ApstraktnaSO{
+    private Racun racun;
+
     @Override
     protected void preduslov(OpstiDomenskiObjekat odo) throws Exception {
         if (!(odo instanceof Racun)) {
             throw new Exception("Prosledjeni objekat nije instanca klase Racun!");
         }
-
-        Racun racun = (Racun) odo;
-
-        if (racun.getZaposleni() == null && racun.getPenjac() == null && racun.getDatumVreme() == null) {
-            throw new Exception("Morate uneti bar jedan kriterijum pretrage!");
+        
+        Racun r = (Racun) odo;
+        
+        if (r.getIdRacun() == null) {
+            throw new Exception("Racun mora imati ID!");
         }
     }
 
     @Override
     protected void izvrsiOperaciju(OpstiDomenskiObjekat odo) throws Exception {
-        Racun racun = (Racun) odo;
-        racuni = repository.getAll(racun);
-        
-        if (racuni.isEmpty()) {
-            throw new Exception("Sistem ne moze da nadje racune po zadatim kriterijumima!");
+        Racun r = (Racun) odo;
+        racun = (Racun) repository.get(r);
+        if (racun == null) {
+            throw new Exception("Sistem ne moze da nadje racun!");
         }
+        StavkaRacuna sr = new StavkaRacuna();
+        sr.setRacun(racun);
+        List<StavkaRacuna> stavke = repository.getAll(sr);
+        racun.setStavkeRacuna(stavke);
     }
 
-    public List<Racun> getRacuni() {
-        return racuni;
+    public Racun getRacun() {
+        return racun;
     }
 }

@@ -12,7 +12,8 @@ import so.ApstraktnaSO;
  *
  * @author Administrator
  */
-public class PromeniPenjacSO extends ApstraktnaSO{
+public class VratiPenjacSO extends ApstraktnaSO{
+    private Penjac penjac;
 
     @Override
     protected void preduslov(OpstiDomenskiObjekat odo) throws Exception {
@@ -22,26 +23,22 @@ public class PromeniPenjacSO extends ApstraktnaSO{
         
         Penjac p = (Penjac) odo;
         
-        if (p.getIme() == null || p.getIme().isBlank()) {
-            throw new Exception("Ime penjaca ne sme biti prazno!");
-        }
-        if (p.getPrezime() == null || p.getPrezime().isBlank()) {
-            throw new Exception("Prezime penjaca ne sme biti prazno!");
-        }
-        if (p.getGodine() <= 5) {
-            throw new Exception("Broj godina penjaca mora biti veci od 5");
-        }
-        if (p.getEmail() == null || !p.getEmail().contains("@")) {
-            throw new Exception("Email penjaca nije u ispravnom formatu!");
-        }
-        if (p.getKategorija() == null) {
-            throw new Exception("Kategorija penjaca mora biti izabrana!");
+        if (p.getIdPenjac() == null) {
+            throw new Exception("Penjac mora imati ID!");
         }
     }
 
     @Override
     protected void izvrsiOperaciju(OpstiDomenskiObjekat odo) throws Exception {
         Penjac p = (Penjac) odo;
-        repository.edit(p);
+        penjac = (Penjac) repository.get(p);
+        
+        if (penjac == null) {
+            throw new Exception("Sistem ne moze da nadje penjaca!");
+        }
+    }
+
+    public Penjac getPenjac() {
+        return penjac;
     }
 }

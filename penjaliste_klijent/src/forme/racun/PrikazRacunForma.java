@@ -5,6 +5,8 @@
 package forme.racun;
 
 import controller.ControllerClient;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import javax.swing.JOptionPane;
 import model.Penjac;
@@ -47,6 +49,8 @@ public class PrikazRacunForma extends javax.swing.JFrame {
         jButtonPrikaziSve = new javax.swing.JButton();
         jButtonOdustani = new javax.swing.JButton();
         jButtonDetaljiRacuna = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jTextFieldDatum = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -113,39 +117,41 @@ public class PrikazRacunForma extends javax.swing.JFrame {
             }
         });
 
+        jLabel3.setText("Datum (dd.mm.gggg):");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 773, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(202, 202, 202)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2))
-                        .addGap(27, 27, 27)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jComboBoxZaposleni, 0, 213, Short.MAX_VALUE)
-                            .addComponent(jComboBoxPenjac, 0, 213, Short.MAX_VALUE))
-                        .addGap(38, 38, 38)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButtonPretrazi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButtonPrikaziSve, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 773, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButtonDetaljiRacuna)
-                                .addGap(97, 97, 97)
-                                .addComponent(jButtonKreirajRacun)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButtonPromeniRacun)
-                                .addGap(129, 129, 129)
-                                .addComponent(jButtonOdustani)))))
+                        .addComponent(jButtonDetaljiRacuna)
+                        .addGap(97, 97, 97)
+                        .addComponent(jButtonKreirajRacun)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonPromeniRacun)
+                        .addGap(129, 129, 129)
+                        .addComponent(jButtonOdustani)))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3))
+                .addGap(27, 27, 27)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTextFieldDatum)
+                    .addComponent(jComboBoxZaposleni, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jComboBoxPenjac, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(38, 38, 38)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButtonPretrazi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonPrikaziSve))
+                .addGap(141, 141, 141))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -160,7 +166,11 @@ public class PrikazRacunForma extends javax.swing.JFrame {
                     .addComponent(jComboBoxPenjac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
                     .addComponent(jButtonPrikaziSve))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextFieldDatum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -183,11 +193,12 @@ public class PrikazRacunForma extends javax.swing.JFrame {
         ModelTabeleRacuni mtr = (ModelTabeleRacuni) jTableRacuni.getModel();
         Racun r = mtr.getRacuni().get(selektovaniRed);
         try{
-            DodajPromeniRacunForma dprf = new DodajPromeniRacunForma(this, r);
+            Racun racun = ControllerClient.getInstance().vratiRacun(r);
+            DodajPromeniRacunForma dprf = new DodajPromeniRacunForma(this, racun);
             JOptionPane.showMessageDialog(this, "Sistem je nasao racun!", "Uspeh!", JOptionPane.INFORMATION_MESSAGE);
             dprf.setVisible(true);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Sistem ne moze da nadje racun!", "Greska!", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Greska!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButtonPromeniRacunActionPerformed
 
@@ -200,10 +211,22 @@ public class PrikazRacunForma extends javax.swing.JFrame {
          try {
             Zaposleni z = (Zaposleni) jComboBoxZaposleni.getSelectedItem();
             Penjac p = (Penjac) jComboBoxPenjac.getSelectedItem();
+            String dat = jTextFieldDatum.getText().trim();
             
             Racun r = new Racun();
             r.setZaposleni(z);
             r.setPenjac(p);
+            
+            if (!dat.isEmpty()) {
+                try {
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+                    LocalDate datum = LocalDate.parse(dat, formatter);
+                    r.setDatumVreme(datum.atStartOfDay());
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, "Datum nije ispravnog formata! Koristite dd.mm.gggg", "Greska!", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
 
             List<Racun> racuni = ControllerClient.getInstance().pretraziRacune(r);
             
@@ -219,6 +242,7 @@ public class PrikazRacunForma extends javax.swing.JFrame {
     private void jButtonPrikaziSveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPrikaziSveActionPerformed
         jComboBoxZaposleni.setSelectedIndex(-1);
         jComboBoxPenjac.setSelectedIndex(-1);
+        jTextFieldDatum.setText("");
         popuniTabelu();
     }//GEN-LAST:event_jButtonPrikaziSveActionPerformed
 
@@ -237,11 +261,12 @@ public class PrikazRacunForma extends javax.swing.JFrame {
         Racun r = mtr.getRacuni().get(selektovaniRed);
         
         try {
+            Racun racun = ControllerClient.getInstance().vratiRacun(r);
             JOptionPane.showMessageDialog(this, "Sistem je nasao racun!", "Uspeh!", JOptionPane.INFORMATION_MESSAGE);
-            DetaljiRacunaForma drf = new DetaljiRacunaForma(r);
+            DetaljiRacunaForma drf = new DetaljiRacunaForma(racun);
             drf.setVisible(true);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Sistem ne moze da nadje racun!", "Greska!", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Greska!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButtonDetaljiRacunaActionPerformed
 
@@ -256,8 +281,10 @@ public class PrikazRacunForma extends javax.swing.JFrame {
     private javax.swing.JComboBox<Object> jComboBoxZaposleni;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableRacuni;
+    private javax.swing.JTextField jTextFieldDatum;
     // End of variables declaration//GEN-END:variables
 
     private void prepareView() {

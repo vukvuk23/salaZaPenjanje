@@ -13,14 +13,16 @@ import model.Usluga;
 import model.Zaposleni;
 import so.kategorija.VratiKategorijeSO;
 import so.login.LoginSO;
-import so.penjac.KreirajPenjacSO;
+import so.penjac.UbacijPenjacSO;
 import so.penjac.ObrisiPenjacSO;
 import so.penjac.PretraziPenjacSO;
 import so.penjac.PromeniPenjacSO;
+import so.penjac.VratiPenjacSO;
 import so.penjac.VratiPenjaceSO;
-import so.racun.KreirajRacunSO;
+import so.racun.UbaciRacunSO;
 import so.racun.PretraziRacunSO;
 import so.racun.PromeniRacunSO;
+import so.racun.VratiRacunSO;
 import so.racun.VratiRacuneSO;
 import so.smena.UbaciSmenaSo;
 import so.usluga.VratiUslugeSO;
@@ -62,8 +64,8 @@ public class ControllerServer {
         return so.getKategorije();
     }
 
-    public void kreirajPenjaca(Penjac p) throws Exception {
-        KreirajPenjacSO so = new KreirajPenjacSO();
+    public void ubaciPenjaca(Penjac p) throws Exception {
+        UbacijPenjacSO so = new UbacijPenjacSO();
         so.izvrsi(p);
     }
 
@@ -104,8 +106,8 @@ public class ControllerServer {
         return so.getUsluge();
     }
 
-    public void kreirajRacun(Racun r) throws Exception {
-        KreirajRacunSO so = new KreirajRacunSO();
+    public void ubaciRacun(Racun r) throws Exception {
+        UbaciRacunSO so = new UbaciRacunSO();
         so.izvrsi(r);
     }
 
@@ -123,5 +125,17 @@ public class ControllerServer {
     public void ubaciSmenu(Smena smena) throws Exception {
         UbaciSmenaSo so = new UbaciSmenaSo();
         so.izvrsi(smena);
+    }
+
+    public Racun vratiRacun(Racun r) throws Exception {
+        VratiRacunSO so = new VratiRacunSO();
+        so.izvrsi(r);
+        return so.getRacun();
+    }
+
+    public Penjac vratiPenjaca(Penjac p) throws Exception {
+        VratiPenjacSO so = new VratiPenjacSO();
+        so.izvrsi(p);
+        return so.getPenjac();
     }
 }

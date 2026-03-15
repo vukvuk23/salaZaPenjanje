@@ -13,7 +13,7 @@ import so.ApstraktnaSO;
  *
  * @author Administrator
  */
-public class KreirajRacunSO extends ApstraktnaSO {
+public class UbaciRacunSO extends ApstraktnaSO {
 
      @Override
     protected void preduslov(OpstiDomenskiObjekat odo) throws Exception {
@@ -39,7 +39,7 @@ public class KreirajRacunSO extends ApstraktnaSO {
     @Override
     protected void izvrsiOperaciju(OpstiDomenskiObjekat odo) throws Exception {
         Racun racun = (Racun) odo;
-
+        racun.izracunajUkupanIznos();
         repository.add(racun);
 
         for (StavkaRacuna s : racun.getStavkeRacuna()) {

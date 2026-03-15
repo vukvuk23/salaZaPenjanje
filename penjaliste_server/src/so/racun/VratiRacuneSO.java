@@ -7,7 +7,6 @@ package so.racun;
 import java.util.List;
 import model.OpstiDomenskiObjekat;
 import model.Racun;
-import model.StavkaRacuna;
 import so.ApstraktnaSO;
 
 /**
@@ -28,12 +27,9 @@ public class VratiRacuneSO extends ApstraktnaSO {
     protected void izvrsiOperaciju(OpstiDomenskiObjekat odo) throws Exception {
         Racun r = (Racun) odo;
         racuni = repository.getAll(r);
-
-        for (Racun racun : racuni) {
-            StavkaRacuna sr = new StavkaRacuna();
-            sr.setRacun(racun);
-            List<StavkaRacuna> stavke = repository.getAll(sr);
-            racun.setStavkeRacuna(stavke);
+        
+        if(racuni.isEmpty()){
+            System.out.println("Nema racuna!");
         }
     }
 

@@ -36,22 +36,30 @@ public class PromeniRacunSO extends ApstraktnaSO{
 
     @Override
     protected void izvrsiOperaciju(OpstiDomenskiObjekat odo) throws Exception {
-        Racun r = (Racun) odo;
+            Racun r = (Racun) odo;
+            
+            r.izracunajUkupanIznos();
+            
+            repository.edit(r);
 
-        r.izracunajUkupanIznos();
+            StavkaRacuna sr = new StavkaRacuna();
+            sr.setRacun(r);
+            List<StavkaRacuna> stavke = repository.getAll(sr);
 
-        repository.edit(r);
+            for (StavkaRacuna stara : stavke) {
+                if (!r.getStavkeRacuna().contains(stara)) {
+                    repository.delete(stara);
+                }
+            }
 
-        StavkaRacuna sr = new StavkaRacuna();
-        sr.setRacun(r);
-        List<StavkaRacuna> stavke = repository.getAll(sr);
-        for (StavkaRacuna s : stavke) {
-            repository.delete(s);
-        }
+            for (StavkaRacuna stavka : r.getStavkeRacuna()) {
+                stavka.setRacun(r);
+                if (stavke.contains(stavka)) {
+                    repository.edit(stavka); 
+                } else {
+                    repository.add(stavka); 
+                }
+            }
 
-        for (StavkaRacuna s : r.getStavkeRacuna()) {
-            s.setRacun(r);
-            repository.add(s);
-        }
     }
 }

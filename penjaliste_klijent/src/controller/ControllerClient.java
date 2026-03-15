@@ -78,8 +78,8 @@ public class ControllerClient {
         }
     }
 
-    public void kreirajPenjaca(Penjac p) throws Exception {
-        Zahtev zahtev = new Zahtev(Operacije.KREIRAJ_PENJAC, p);
+    public void ubaciPenjaca(Penjac p) throws Exception {
+        Zahtev zahtev = new Zahtev(Operacije.UBACI_PENJAC, p);
         Odgovor odgovor = Komunikacija.getInstance().kreirajPenjaca(zahtev);
         
         if(odgovor.getEx() == null){
@@ -155,9 +155,9 @@ public class ControllerClient {
         }
     }
 
-    public void kreirajRacun(Racun r) throws Exception {
-        Zahtev zahtev = new Zahtev(Operacije.KREIRAJ_RACUN, r);
-        Odgovor odgovor = Komunikacija.getInstance().kreirajRacun(zahtev);
+    public void ubaciRacun(Racun r) throws Exception {
+        Zahtev zahtev = new Zahtev(Operacije.UBACI_RACUN, r);
+        Odgovor odgovor = Komunikacija.getInstance().ubaciRacun(zahtev);
         
         if(odgovor.getEx() == null){
             
@@ -194,6 +194,28 @@ public class ControllerClient {
         
         if(odgovor.getEx() == null){
             
+        } else {
+            throw odgovor.getEx();
+        }
+    }
+
+    public Racun vratiRacun(Racun r) throws Exception {
+        Zahtev zahtev = new Zahtev(Operacije.VRATI_RACUN, r);
+        Odgovor odgovor = Komunikacija.getInstance().vratiRacun(zahtev);
+
+        if(odgovor.getEx() == null){
+            return (Racun) odgovor.getOdgovor();
+        } else {
+            throw odgovor.getEx();
+        }
+    }
+
+    public Penjac vratiPenjaca(Penjac p) throws Exception {
+        Zahtev zahtev = new Zahtev(Operacije.VRATI_PENJAC, p);
+        Odgovor odgovor = Komunikacija.getInstance().vratiPenjaca(zahtev);
+
+        if(odgovor.getEx() == null){
+            return (Penjac) odgovor.getOdgovor();
         } else {
             throw odgovor.getEx();
         }

@@ -22,7 +22,7 @@ public class Konfiguracija {
     private Konfiguracija(){
         try {
             properties = new Properties();
-            properties.load(new FileInputStream("C:\\Users\\Administrator\\Desktop\\repos\\ps\\penjaliste_server\\config\\config.properties"));
+            properties.load(new FileInputStream("config\\config.properties"));
         } catch (IOException ex) {
             Logger.getLogger(Konfiguracija.class.getName()).log(Level.SEVERE, "Greska prilikom ucitavanja config fajla!", ex);
         }
@@ -43,7 +43,7 @@ public class Konfiguracija {
     
     public void sacuvajIzmene(){
         try {
-            properties.store(new FileOutputStream("C:\\Users\\Administrator\\Desktop\\repos\\ps\\penjaliste_server\\config\\config.properties"), null);
+            properties.store(new FileOutputStream("config\\config.properties"), null);
         } catch (IOException ex) {
             Logger.getLogger(Konfiguracija.class.getName()).log(Level.SEVERE, "Greska prilikom upisivanja u config fajl!", ex);
         }

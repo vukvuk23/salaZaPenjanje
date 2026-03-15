@@ -133,7 +133,6 @@ public class UbaciSmenuForma extends javax.swing.JFrame {
             this.dispose();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Sistem ne moze da zapamti smenu!", "Greska!", JOptionPane.ERROR_MESSAGE);
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Greska!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButtonUbaciActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
