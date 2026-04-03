@@ -29,7 +29,8 @@ public class ObradaKlijentskihZahteva extends Thread{
     private Socket s;
     private Sender sender;
     private Reciever reciever;
-
+    private Zaposleni z;
+    
     public ObradaKlijentskihZahteva(Socket s) {
         this.s = s;
         this.sender = new Sender(s);
@@ -109,6 +110,7 @@ public class ObradaKlijentskihZahteva extends Thread{
         try {
             Zaposleni z = ControllerServer.getInstance().login((Zaposleni) zahtev.getParametar());
             System.out.println("Uspesna prijava na sistem...");
+            this.z = z;
             odgovor.setOdgovor(z); // postaviti zapolsenog zbog liste zaposlenih
         } catch (Exception ex) {
             ex.printStackTrace();

@@ -43,7 +43,7 @@ public class ControllerServer {
         if (instance == null) instance = new ControllerServer();
         return instance;
     }
-
+    
     public Zaposleni login(Zaposleni zaposleni) throws Exception {
         LoginSO so = new LoginSO();
         so.izvrsi(zaposleni);

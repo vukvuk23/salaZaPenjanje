@@ -27,13 +27,14 @@ public class LoginSO extends ApstraktnaSO{
         }
         if (z.getLozinka() == null || z.getLozinka().isEmpty()) {
             throw new Exception("Lozinka ne moze biti prazna!");
-        } // da li je vec ulogovan?
+        }
     }
 
     @Override
     protected void izvrsiOperaciju(OpstiDomenskiObjekat odo) throws Exception {
         Zaposleni z = (Zaposleni) odo;
         ulogovani =   (Zaposleni) repository.get(z);
+        
         if(ulogovani == null){
             throw new Exception("Email i sifra nisu ispravni!");
         }

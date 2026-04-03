@@ -27,7 +27,7 @@ public class DbRepositoryGeneric implements DbRepository<OpstiDomenskiObjekat>{
             sb.append("SELECT * FROM ").append(odo.vratiNazivTabele())
               .append(odo.alias()).append(odo.join());
             String uslov = odo.uslovZaSelect();
-            if (uslov != null && !uslov.isEmpty()) {// zato sto kada se vracaju svi obj, nije potreban uslov
+            if (uslov != null && !uslov.isEmpty()) {
                 sb.append(" WHERE ").append(uslov);
             }
             String upit = sb.toString();
